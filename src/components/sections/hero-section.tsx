@@ -286,39 +286,37 @@ export function HeroSection() {
         userSelect: 'none'
       }}
     >
-      {/* Carousel Images - Crossfade without gaps */}
+      {/* Professional Parallax Images */}
       {slides.map((slide, index) => (
-        <motion.div
+        <div
           key={index}
-          className="absolute inset-0 w-full h-[120%]"
-          style={{
-            transform: `translate3d(0, ${scrollY * 0.5}px, 0)`,
-          }}
-          initial={false}
-          animate={{ 
-            opacity: index === currentSlide ? 1 : 0,
-            filter: index === currentSlide ? "blur(0px)" : "blur(8px)",
-            scale: index === currentSlide ? 1 : 1.1,
-            transition: { 
-              duration: 2.5, 
-              ease: [0.22, 1, 0.36, 1] as const,
-              opacity: {
-                duration: 2.0
-              },
-              scale: {
-                duration: 3.0
-              }
-            }
-          }}
+          className="absolute inset-0 w-full h-full overflow-hidden"
         >
-          <Image
-            src={slide.image}
-            alt={slide.title}
-            fill
-            className="object-cover"
-            priority={index === 0}
-          />
-        </motion.div>
+          <motion.div
+            className="absolute w-full h-[150%] -top-[25%]"
+            style={{
+              transform: `translate3d(0, ${scrollY * 0.5}px, 0)`,
+              willChange: 'transform',
+            }}
+            initial={false}
+            animate={{ 
+              opacity: index === currentSlide ? 1 : 0,
+              transition: { 
+                duration: 2.0, 
+                ease: [0.22, 1, 0.36, 1] as const
+              }
+            }}
+          >
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              className="object-cover object-center"
+              priority={index === 0}
+              sizes="100vw"
+            />
+          </motion.div>
+        </div>
       ))}
       
       {/* Premium Gradient Overlay */}
