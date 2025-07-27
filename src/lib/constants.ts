@@ -42,23 +42,23 @@ export const STORAGE_KEYS = {
 
 // SEO constants
 export const SEO = {
-  DEFAULT_TITLE: "N1 Nail Shop",
+  DEFAULT_TITLE: "N1 Nail Beauty Bar",
   DEFAULT_DESCRIPTION: "Premium nail services with luxury and precision",
-  SITE_URL: "https://n1nailshop.com",
+  SITE_URL: "https://n1nailbeautybar.com",
   OG_IMAGE: "/og-image.jpg",
 } as const;
 
 // Contact information
 export const CONTACT = {
   PHONE: "+1 (555) 123-4567",
-  EMAIL: "info@n1nailshop.com",
+  EMAIL: "n1nailandbeautybar@gmail.com",
   ADDRESS: "123 Luxury Lane, Beverly Hills, CA 90210",
 } as const;
 
 // Social media links
 export const SOCIAL_LINKS = {
-  INSTAGRAM: "https://instagram.com/n1nailshop",
-  FACEBOOK: "https://facebook.com/n1nailshop",
+  INSTAGRAM: "https://instagram.com/n1nailbeautybar",
+  FACEBOOK: "https://facebook.com/n1nailbeautybar",
 } as const;
 
 // Performance constants

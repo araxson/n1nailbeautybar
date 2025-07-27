@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { aboutData } from "@/data/about";
 import { SectionHeader } from "@/components/ui/typography";
 import { Container, Section } from "@/components/ui/container";
@@ -12,7 +13,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <SectionHeader
               title="About Us"
-              description="Learn about our journey, mission, and the passionate team behind N1 Nail Shop"
+              description="Learn about our journey, mission, and the passionate team behind N1 Nail Beauty Bar"
             />
           </div>
         </Container>
@@ -126,7 +127,7 @@ export default function AboutPage() {
             />
             <div className="mt-8">
               <AppButton variant="primary" size="lg" className="px-8 py-4" asChild>
-                <a href="/services">Book Now</a>
+                <Link href="/#contact">Book Now</Link>
               </AppButton>
             </div>
           </div>

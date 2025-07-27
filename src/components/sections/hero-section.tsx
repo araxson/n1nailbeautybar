@@ -275,6 +275,7 @@ export function HeroSection() {
 
   return (
     <section 
+      id="hero"
       className="relative h-screen w-full overflow-hidden touch-pan-y cursor-grab active:cursor-grabbing"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -300,7 +301,7 @@ export function HeroSection() {
             scale: index === currentSlide ? 1 : 1.1,
             transition: { 
               duration: 2.5, 
-              ease: [0.22, 1, 0.36, 1],
+              ease: [0.22, 1, 0.36, 1] as const,
               opacity: {
                 duration: 2.0
               },
@@ -387,7 +388,7 @@ export function HeroSection() {
               transition: { 
                 delay: 3.2, 
                 duration: 1.8, 
-                ease: [0.19, 1, 0.22, 1] 
+                ease: [0.19, 1, 0.22, 1] as const 
               }
             }}
           >
@@ -396,7 +397,7 @@ export function HeroSection() {
               whileHover={{ 
                 backgroundColor: "rgba(255, 255, 255, 0.15)",
                 borderColor: "rgba(255, 255, 255, 0.5)",
-                transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+                transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] as const }
               }}
               whileTap={{ 
                 backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -416,7 +417,7 @@ export function HeroSection() {
         className="absolute bottom-8 left-8 z-20 flex space-x-4"
         initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ delay: 3.2, duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 3.2, duration: 1.8, ease: [0.22, 1, 0.36, 1] as const }}
       >
         {slides.map((_, index) => (
           <motion.button
@@ -438,7 +439,7 @@ export function HeroSection() {
               }}
               transition={{ 
                 duration: 0.8, 
-                ease: [0.22, 1, 0.36, 1]
+                ease: [0.22, 1, 0.36, 1] as const
               }}
             />
             <motion.div
@@ -456,10 +457,10 @@ export function HeroSection() {
         aria-label="Previous slide"
         initial={{ opacity: 0, x: -50, filter: "blur(10px)" }}
         animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ delay: 3.0, duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 3.0, duration: 1.6, ease: [0.22, 1, 0.36, 1] as const }}
         whileHover={{ 
           x: -5,
-          transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+          transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const }
         }}
         whileTap={{ scale: 0.95 }}
       >
@@ -481,10 +482,10 @@ export function HeroSection() {
         aria-label="Next slide"
         initial={{ opacity: 0, x: 50, filter: "blur(10px)" }}
         animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ delay: 3.0, duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 3.0, duration: 1.6, ease: [0.22, 1, 0.36, 1] as const }}
         whileHover={{ 
           x: 5,
-          transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+          transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const }
         }}
         whileTap={{ scale: 0.95 }}
       >

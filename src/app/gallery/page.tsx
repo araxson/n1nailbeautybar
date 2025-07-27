@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionHeader } from "@/components/ui/typography";
 import { Container, Section } from "@/components/ui/container";
 import { AppButton } from "@/components/ui/app-button";
@@ -47,7 +48,7 @@ export default function GalleryPage() {
             />
             <div className="mt-8">
               <AppButton variant="primary" size="lg" className="px-8 py-4" asChild>
-                <a href="/services">Book Appointment</a>
+                <Link href="/#contact">Book Appointment</Link>
               </AppButton>
             </div>
           </div>

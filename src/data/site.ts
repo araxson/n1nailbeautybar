@@ -15,13 +15,13 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: "N1 Nail Shop",
+  name: "N1 Nail Beauty Bar",
   description: "Premium nail services with luxury and precision",
-  url: "https://n1nailshop.com",
+  url: "https://n1nailbeautybar.com",
   ogImage: "/og-image.jpg",
   links: {
-    instagram: "https://instagram.com/n1nailshop",
-    facebook: "https://facebook.com/n1nailshop",
+    instagram: "https://instagram.com/n1nailbeautybar",
+    facebook: "https://facebook.com/n1nailbeautybar",
   },
   contact: {
     phone: "(403) 454-0488",

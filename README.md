@@ -1,4 +1,4 @@
-# N1 Nail Shop - Luxury Nail Care Website
+# N1 Nail Beauty Bar - Luxury Nail Care Website
 
 A minimalistic, modern luxury nail shop website built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
 
@@ -147,4 +147,4 @@ The website uses a strict black and white luxury theme. All styling is done thro
 
 ## License
 
-This project is created for N1 Nail Shop. All rights reserved.
+This project is created for N1 Nail Beauty Bar. All rights reserved.

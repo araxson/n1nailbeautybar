@@ -61,7 +61,7 @@ export default function ServicesPage() {
             <div className="text-center mb-12">
               <SectionHeader
                 title="Ready to Book?"
-                description="Contact us to schedule your appointment and experience the luxury of N1 Nail Shop"
+                description="Contact us to schedule your appointment and experience the luxury of N1 Nail Beauty Bar"
               />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

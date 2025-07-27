@@ -12,24 +12,24 @@ export interface NavigationData {
 export const navigationData: NavigationData = {
   mainNav: [
     {
-      title: "Home",
-      href: "/",
-      description: "Welcome to N1 Nail Shop",
+      title: "HOME",
+      href: "#hero",
+      description: "Welcome to N1 Nail Beauty Bar",
     },
     {
-      title: "Services",
+      title: "SERVICES",
       href: "#services",
       description: "Our premium nail services",
     },
     {
-      title: "Gallery",
-      href: "#gallery",
-      description: "View our work portfolio",
-    },
-    {
-      title: "About",
+      title: "ABOUT",
       href: "#about",
       description: "Learn about our story",
+    },
+    {
+      title: "CONTACT",
+      href: "#contact",
+      description: "Get in touch with us",
     },
   ],
   footerNav: [

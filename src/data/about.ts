@@ -30,7 +30,7 @@ export const aboutData: AboutData = {
   story: {
     title: "Our Story",
     content:
-      "Founded with a passion for beauty and precision, N1 Nail Shop has been serving our community with exceptional nail care services since 2018. What started as a small studio has grown into a premier destination for those seeking luxury nail treatments in a sophisticated environment.",
+      "Founded with a passion for beauty and precision, N1 Nail Beauty Bar has been serving our community with exceptional nail care services since 2018. What started as a small studio has grown into a premier destination for those seeking luxury nail treatments in a sophisticated environment.",
   },
   mission: {
     title: "Our Mission",

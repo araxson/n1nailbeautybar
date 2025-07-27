@@ -1,4 +1,4 @@
-# N1 Nail Shop - Service Menu
+# N1 Nail Beauty Bar - Service Menu
 
 ## Manicure Services
 
