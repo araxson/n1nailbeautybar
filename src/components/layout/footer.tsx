@@ -11,11 +11,11 @@ export function Footer() {
       {/* Main Footer Content */}
       <Section padding="xl" background="default">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12">
             {/* Brand */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">{siteConfig.name}</h3>
-              <p className="text-gray-600 mb-4">{siteConfig.description}</p>
+            <div className="sm:col-span-2 md:col-span-1">
+              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">{siteConfig.name}</h3>
+              <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{siteConfig.description}</p>
               <div className="flex space-x-4">
                 <Link
                   href={siteConfig.links.instagram}
@@ -40,7 +40,7 @@ export function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Quick Links</h3>
               <nav role="navigation" aria-label="Footer navigation">
                 <ul className="space-y-3">
                   {navigationData.mainNav.map((item) => (
@@ -60,7 +60,7 @@ export function Footer() {
 
             {/* Contact */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Contact</h3>
+              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact</h3>
               <address className="space-y-3 text-gray-600 not-italic">
                 <div>
                   <a
@@ -90,12 +90,12 @@ export function Footer() {
       {/* Bottom Copyright Row */}
       <Section padding="md" background="muted">
         <Container>
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
             <div className="text-sm text-gray-600">
               © {currentYear} {siteConfig.name}. All rights reserved.
             </div>
             <nav
-              className="flex space-x-6"
+              className="flex flex-wrap justify-center gap-4 sm:gap-6"
               role="navigation"
               aria-label="Legal navigation"
             >

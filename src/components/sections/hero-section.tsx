@@ -142,8 +142,12 @@ export function HeroSection() {
 
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      requestAnimationFrame(() => {
+        setScrollY(window.scrollY);
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -193,8 +197,10 @@ export function HeroSection() {
     }
     setTouchEnd(null);
     
-    // Add visual feedback on touch start
-    (e.currentTarget as HTMLElement).style.cursor = 'grabbing';
+    // Add visual feedback on touch start for desktop only
+    if (!isMobile) {
+      (e.currentTarget as HTMLElement).style.cursor = 'grabbing';
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -220,8 +226,10 @@ export function HeroSection() {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!isMobile) return; // Only handle on mobile
     
-    // Reset cursor
-    (e.currentTarget as HTMLElement).style.cursor = 'grab';
+    // Reset cursor for desktop only
+    if (!isMobile) {
+      (e.currentTarget as HTMLElement).style.cursor = 'grab';
+    }
     
     if (!touchStart || !touchEnd || isTransitioning) {
       setTouchStart(null);
@@ -276,14 +284,15 @@ export function HeroSection() {
   return (
     <section 
       id="hero"
-      className="relative h-screen w-full overflow-hidden touch-pan-y cursor-grab active:cursor-grabbing"
+      className="relative h-screen min-h-[600px] w-full overflow-hidden touch-pan-y"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       style={{ 
-        touchAction: 'pan-y',
+        touchAction: isMobile ? 'pan-y pinch-zoom' : 'auto',
         WebkitUserSelect: 'none',
-        userSelect: 'none'
+        userSelect: 'none',
+        cursor: isMobile ? 'default' : 'grab'
       }}
     >
       {/* Professional Parallax Images */}
@@ -293,10 +302,10 @@ export function HeroSection() {
           className="absolute inset-0 w-full h-full overflow-hidden"
         >
           <motion.div
-            className="absolute w-full h-[150%] -top-[25%]"
+            className="absolute w-full h-[120%] -top-[10%] md:h-[130%] md:-top-[15%]"
             style={{
-              transform: `translate3d(0, ${scrollY * 0.5}px, 0)`,
-              willChange: 'transform',
+              transform: isMobile ? 'none' : `translate3d(0, ${scrollY * 0.3}px, 0)`,
+              willChange: isMobile ? 'auto' : 'transform',
             }}
             initial={false}
             animate={{ 
@@ -314,17 +323,18 @@ export function HeroSection() {
               className="object-cover object-center"
               priority={index === 0}
               sizes="100vw"
+              quality={90}
             />
           </motion.div>
         </div>
       ))}
       
       {/* Premium Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/50"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60"></div>
       
       {/* Hero Content - Bottom Left */}
-      <div className="absolute bottom-16 left-8 z-20">
-        <div className="text-white max-w-lg">
+      <div className="absolute bottom-8 md:bottom-16 left-4 md:left-8 right-4 md:right-auto z-20">
+        <div className="text-white max-w-full md:max-w-lg">
           <AnimatePresence mode="wait">
             <motion.div 
               key={`${currentSlide}-${animationKey}`}
@@ -338,7 +348,7 @@ export function HeroSection() {
               <motion.div className="overflow-hidden">
                 <motion.h1 
                   variants={titleVariants}
-                  className="text-3xl md:text-5xl font-extralight tracking-[0.1em] text-white"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight tracking-[0.05em] md:tracking-[0.1em] text-white"
                 >
                   {slides[currentSlide]?.title}
                 </motion.h1>
@@ -356,7 +366,7 @@ export function HeroSection() {
               <motion.div className="overflow-hidden">
                 <motion.p 
                   variants={subtitleVariants}
-                  className="text-sm md:text-base font-light tracking-[0.3em] uppercase opacity-90"
+                  className="text-xs sm:text-sm md:text-base font-light tracking-[0.2em] md:tracking-[0.3em] uppercase opacity-90"
                 >
                   {slides[currentSlide]?.subtitle}
                 </motion.p>
@@ -366,7 +376,7 @@ export function HeroSection() {
               <motion.div className="overflow-hidden">
                 <motion.p 
                   variants={descriptionVariants}
-                  className="text-sm font-light tracking-wide opacity-75 max-w-sm leading-relaxed"
+                  className="text-xs sm:text-sm md:text-base font-light tracking-wide opacity-75 max-w-full md:max-w-sm leading-relaxed"
                 >
                   {slides[currentSlide]?.description}
                 </motion.p>
@@ -376,7 +386,7 @@ export function HeroSection() {
           
           {/* Static CTA Button - Outside AnimatePresence */}
           <motion.div 
-            className="pt-10"
+            className="pt-6 md:pt-10"
             initial={{ opacity: 0, y: 50, filter: "blur(6px)", scale: 0.92 }}
             animate={{ 
               opacity: 1, 
@@ -391,7 +401,7 @@ export function HeroSection() {
             }}
           >
             <motion.button 
-              className="bg-white/10 border border-white/30 text-white px-8 py-3 text-xs font-light tracking-[0.2em] uppercase overflow-hidden relative"
+              className="bg-white/10 border border-white/30 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-xs font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase overflow-hidden relative"
               whileHover={{ 
                 backgroundColor: "rgba(255, 255, 255, 0.15)",
                 borderColor: "rgba(255, 255, 255, 0.5)",
@@ -412,7 +422,7 @@ export function HeroSection() {
       
       {/* Premium Navigation Dots */}
       <motion.div 
-        className="absolute bottom-8 left-8 z-20 flex space-x-4"
+        className="absolute bottom-8 left-4 md:left-8 z-20 flex space-x-3 md:space-x-4"
         initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ delay: 3.2, duration: 1.8, ease: [0.22, 1, 0.36, 1] as const }}
@@ -451,7 +461,7 @@ export function HeroSection() {
       {/* Premium Navigation Arrows */}
       <motion.button
         onClick={prevSlide}
-        className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center text-white/40 group"
+        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center text-white/40 group"
         aria-label="Previous slide"
         initial={{ opacity: 0, x: -50, filter: "blur(10px)" }}
         animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
@@ -464,7 +474,7 @@ export function HeroSection() {
       >
         <motion.div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 rounded-full backdrop-blur-sm transition-all duration-500" />
         <motion.svg 
-          className="w-5 h-5 relative z-10" 
+          className="w-4 h-4 md:w-5 md:h-5 relative z-10" 
           fill="none" 
           viewBox="0 0 24 24" 
           stroke="currentColor"
@@ -476,7 +486,7 @@ export function HeroSection() {
       
       <motion.button
         onClick={nextSlide}
-        className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center text-white/40 group"
+        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center text-white/40 group"
         aria-label="Next slide"
         initial={{ opacity: 0, x: 50, filter: "blur(10px)" }}
         animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
@@ -489,7 +499,7 @@ export function HeroSection() {
       >
         <motion.div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 rounded-full backdrop-blur-sm transition-all duration-500" />
         <motion.svg 
-          className="w-5 h-5 relative z-10" 
+          className="w-4 h-4 md:w-5 md:h-5 relative z-10" 
           fill="none" 
           viewBox="0 0 24 24" 
           stroke="currentColor"

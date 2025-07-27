@@ -19,14 +19,14 @@ export function AboutSection() {
             {/* Text Content */}
             <div className="space-y-12">
               <div>
-                <h3 className="text-2xl font-light tracking-[0.2em] text-gray-900 mb-8 uppercase">
+                <h3 className="text-xl sm:text-2xl font-light tracking-[0.15em] sm:tracking-[0.2em] text-gray-900 mb-6 sm:mb-8 uppercase">
                   Refined Excellence
                 </h3>
-                <p className="text-lg font-light text-gray-600 leading-relaxed mb-8 tracking-wide">
+                <p className="text-base sm:text-lg font-light text-gray-600 leading-relaxed mb-6 sm:mb-8 tracking-wide">
                   At N1 Nail Beauty Bar, we believe that nail care transcends mere beauty—it&apos;s an art form 
                   that demands precision, creativity, and an unwavering commitment to excellence.
                 </p>
-                <p className="text-lg font-light text-gray-600 leading-relaxed tracking-wide">
+                <p className="text-base sm:text-lg font-light text-gray-600 leading-relaxed tracking-wide">
                   Our minimalistic environment provides the perfect backdrop for transformative 
                   experiences, where skilled artisans craft bespoke nail designs with meticulous 
                   attention to detail.
@@ -51,16 +51,16 @@ export function AboutSection() {
             
             {/* Quote */}
             <div className="relative">
-              <div className="p-16 border border-gray-100/80 hover:border-gray-200/80 transition-all duration-300">
-                <div className="text-7xl font-light text-gray-200/60 mb-6 leading-none">
+              <div className="p-8 sm:p-12 md:p-16 border border-gray-100/80 hover:border-gray-200/80 transition-all duration-300">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-light text-gray-200/60 mb-4 sm:mb-6 leading-none">
                   &ldquo;
                 </div>
-                <blockquote className="text-xl font-light text-gray-700 leading-relaxed mb-8 italic tracking-wide">
+                <blockquote className="text-lg sm:text-xl font-light text-gray-700 leading-relaxed mb-6 sm:mb-8 italic tracking-wide">
                   Every detail matters. Every stroke is intentional. 
                   Every client leaves feeling transformed.
                 </blockquote>
-                <div className="h-px w-20 bg-gray-300/60 mb-6 origin-left" />
-                <cite className="text-sm font-light tracking-[0.2em] text-gray-500 uppercase not-italic">
+                <div className="h-px w-20 bg-gray-300/60 mb-4 sm:mb-6 origin-left" />
+                <cite className="text-xs sm:text-sm font-light tracking-[0.15em] sm:tracking-[0.2em] text-gray-500 uppercase not-italic">
                   N1 Beauty Bar Philosophy
                 </cite>
               </div>

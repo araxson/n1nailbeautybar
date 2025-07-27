@@ -133,7 +133,7 @@ export function Header() {
     <>
       {/* Sliding Text Bar */}
       <motion.div 
-        className="absolute top-0 z-50 w-full"
+        className="absolute top-0 z-50 w-full overflow-hidden"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.8 }}
@@ -145,13 +145,13 @@ export function Header() {
       </motion.div>
 
       <header 
-        className="absolute top-8 z-50 w-full bg-transparent"
+        className="absolute top-8 z-50 w-full bg-transparent px-4 md:px-0"
       >
         <Container>
           <div className="flex items-center justify-between h-20">
             {/* LEFT - Hamburger Menu */}
             <div 
-              className="flex items-center md:hidden"
+              className="flex items-center md:hidden flex-shrink-0"
             >
               <motion.button 
                 onClick={toggleMenu}
@@ -192,7 +192,7 @@ export function Header() {
 
             {/* CENTER - Logo */}
             <div 
-              className="flex items-center flex-1 md:flex-none justify-center"
+              className="flex items-center flex-1 md:flex-none justify-center px-4"
             >
               <Link
                 href="/"
@@ -204,7 +204,7 @@ export function Header() {
                   alt="N1 Nail Beauty Bar"
                   width={120}
                   height={40}
-                  className="h-10 w-auto"
+                  className="h-8 md:h-10 w-auto"
                   priority
                 />
               </Link>
@@ -265,7 +265,7 @@ export function Header() {
 
             {/* RIGHT - Mobile Shopping Cart */}
             <div 
-              className="flex items-center md:hidden"
+              className="flex items-center md:hidden flex-shrink-0"
             >
               <button
                 className="w-10 h-10 flex items-center justify-center text-white/90 relative group hover:text-white transition-colors duration-200"
@@ -367,7 +367,7 @@ export function Header() {
               </motion.button>
             </div>
 
-            <div className="pt-28 px-8">
+            <div className="pt-24 px-6 sm:px-8">
               <motion.nav 
                 className="space-y-0"
                 variants={staggerContainer}
@@ -378,7 +378,7 @@ export function Header() {
                   <div key={item.title}>
                     <motion.a 
                       href={item.href}
-                      className="block text-2xl font-light text-gray-900 tracking-wide py-6 relative overflow-hidden"
+                      className="block text-xl sm:text-2xl font-light text-gray-900 tracking-wide py-5 sm:py-6 relative overflow-hidden"
                       onClick={(e) => handleMenuItemClick(item.href, e)}
                       variants={menuItemVariants}
                       whileHover={{ 

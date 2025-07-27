@@ -29,10 +29,10 @@ export function SlidingTextBar({
           ease: "linear"
         }}
       >
-        <span className="text-xs font-light text-white/80 tracking-[0.3em] uppercase py-2 px-4">
+        <span className="text-[10px] sm:text-xs font-light text-white/80 tracking-[0.2em] sm:tracking-[0.3em] uppercase py-1.5 sm:py-2 px-4">
           {repeatedText}
         </span>
-        <span className="text-xs font-light text-white/80 tracking-[0.3em] uppercase py-2 px-4">
+        <span className="text-[10px] sm:text-xs font-light text-white/80 tracking-[0.2em] sm:tracking-[0.3em] uppercase py-1.5 sm:py-2 px-4">
           {repeatedText}
         </span>
       </motion.div>
