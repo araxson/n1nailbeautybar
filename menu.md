@@ -1,150 +1,58 @@
-# N1 Nail Beauty Bar - Service Menu
-
-## Manicure Services
-
-### NAKED Manicure
-**$30** (30 Min)  
-Get the Signature look with a natural finish (no color, polish or gel). Includes nail shaping, cuticle care, moisturizing and buffing of the nail with an optional matte or shine finish.
-
-### Luxury Naked Manicure
-**$50** (40 Min)  
-Get the Luxury look with a natural finish (no color, polish or gel). Includes nail shaping, cuticle care, extended massage, and buffing of the nail with an optional matte or shine finish.
-
-### Polish Manicure
-**$40** (35 Min)  
-Get the Signature look. Featuring shaping, buffing, cuticle care, moisturizing and finished with your choice of polish, including our vegan range.
-
-### Luxury Polish Manicure
-**$54** (45 Min)  
-Indulge yourself in a luxury manicure experience. Featuring shaping, buffing, cuticle care, extended massage, a luxury hot cream treatment and finished with your choice of polish, including our vegan range.
-
-### Gel Manicure
-**$60** (40 Min)  
-Get the Signature look. Featuring shaping, buffing, cuticle care, moisturizing and finished with your choice of gel, including our vegan range.
-
-### Luxury Gel Manicure
-**$70** (50 Min)  
-Indulge yourself in a luxury manicure experience. Featuring shaping, buffing, cuticle care, extended massage, a luxury hot cream treatment and finished with your choice of gel, including our vegan range.
-
----
-
-## Pedicure Services
-
-### Signature Pedicure (Polish)
-**$60** (45 Min)  
-Get the Signature feel. Featuring soak, shaping, buffing, cuticle care, hard skin filing and smoothing, moisturizing and finished with your choice of polish, including our vegan range.
-
-### Signature Pedicure (Gel)
-**$75** (50 Min)  
-Get the Signature feel. Featuring soak, shaping, buffing, cuticle care, hard skin filing and smoothing, moisturizing and finished with your choice of gel, including our vegan range.
-
-### Luxury Pedicure (Naked)
-**$65** (50 Min)  
-Get the Luxury look with a natural finish (no color, polish or gel). Featuring soak, nail shaping, cuticle care, extended massage, scrub, a luxury hot cream treatment and buffing of the nail with an optional matte or shine finish.
-
-### Luxury Pedicure (Polish)
-**$70** (55 Min)  
-Indulge yourself in a luxury pedicure experience. Featuring soak, shaping, buffing, cuticle care, hard skin filing and smoothing, scrub, extended massage, a luxury hot cream treatment and finished with your choice of polish, including our vegan range.
-
-### Luxury Pedicure (Gel)
-**$85** (60 Min)  
-Indulge yourself in a luxury pedicure experience. Featuring soak, shaping, buffing, cuticle care, hard skin filing and smoothing, scrub, extended massage, hot towel treatment and finished with your choice of gel, including our vegan range.
-
----
-
-## Combination Services
-
-### Luxury Gel Mani & Pedi
-**$140** (1 Hour 30 Min)  
-Complete luxury experience combining our signature gel manicure and pedicure services.
-
----
-
-## Nail Enhancement
-
-### Full Set
-- **Short Length:** $80
-- **Medium Length:** $90  
-- **Long Length:** $100
-
-### Refill
-- **Short Length:** $70
-- **Medium Length:** $80
-- **Long Length:** $90
-
-### Add-Ons
-- **Nail Art:** $5 & Up
-- **French Tips:** $10
-- **Take Off:** $20
-
----
-
-## Quick Touch-Ups
-
-### Color Refresh + Polish
-**$25** (10 Min)  
-Refresh your look with a quick tidy up and color application. Performed dry, featuring shaping and buffing of the nail, finished with your choice of polish, including our vegan range.
-
-### Color Refresh + Gel
-**$35** (15 Min)  
-Refresh your look with a quick tidy up and color application. Performed dry, featuring shaping and buffing of the nail and finished with your choice of gel, including our vegan range.
-
----
-
-## Head Spa Packages
-
-### Package A
-**$70** (45 Min)  
-- Stress relieving acupressure
-- Hair shampoo and conditioner
-- Hair blow dry
-
-### Package B
-**$100** (60 Min)  
-- Stress relieving acupressure
-- Hair blow dry
-- Relaxing scalp massage
-- Hydration hair wash
-- Facial cleanse
-- Facial massage
-- Facial mask (hydrojelly)
-
-### Package C
-**$125** (75 Min)  
-- Neck and shoulder massage
-- Nourishing hair mask
-- Hair blow dry
-- Relaxing scalp massage
-- Hydration hair wash
-- Facial cleanse
-- Facial massage
-- Facial mask (hydrojelly)
-- Eye mask
-
----
-
-## Waxing Services
-
-### Eyebrow & Lash Services
-- **Eyebrow Wax:** $15
-- **Eyebrow Tint:** $15
-- **Eyelash Tint:** $20
-- **Lash & Brow Tint:** $30
-- **Women's Brow Wax:** $15
-- **Men's Brow Wax:** $20
-
-### Facial Waxing
-- **Lip Wax:** $15
-- **Chin Wax:** $15
-- **Full Face:** $40
-
-### Body Waxing
-- **Full Leg:** $60 & up
-- **Half Leg:** $35 & up
-- **Full Arm:** $40 & up
-- **Half Arm:** $25 & up
-- **Under Arm:** $25
-- **Chest:** $45 & up
-- **Back:** $35 & up
-- **Bikini:** $30 & up
-- **Brazilian:** $65 & up
+Manicures
+Service	Price (CAD)	Duration	Description
+Basic Manicure	$30	1 hour	Perfect nail shaping, cuticle care, relaxing hand massage, premium polish
+Deluxe Manicure	$40	1 hour 15 mins	Everything in Basic + gentle hand scrub, moisturizing mask, longer massage, heated treatment
+Premium Manicure	$55	1 hour 30 mins	Everything in Deluxe + warm wax treatment, hot stone massage, anti-aging care, complimentary champagne
+Pedicures
+Service	Price (CAD)	Duration	Description
+Basic Pedicure	$45	1 hour	Relaxing foot soak, expert nail care, callus removal, foot massage, perfect polish
+Deluxe Pedicure	$55	1 hour 15 mins	Everything in Basic + sea salt scrub, clay mask, warm booties, pressure point massage
+Premium Pedicure	$70	1 hour 15 mins	Everything in Deluxe + intensive callus care, muscle relief treatment, luxury foot cream to take home
+Long-Lasting Options
+Service	Price (CAD)	Duration	Description
+Gel Manicure	$45	1 hour 15 mins	Chip-free polish that lasts 3-4 weeks
+Gel Pedicure	$60	1 hour 15 mins	Long-wearing polish for perfect toes
+Nail Strengthening	$50	1 hour 15 mins	Protective overlay to help nails grow stronger
+Extensions - Short	$65	1 hr 15 min	Natural-looking length enhancement
+Extensions - Medium	$75	1 hr 15 min	Classic length for everyday elegance
+Extensions - Long	$85	1 hr 15 min	Sophisticated longer length
+Simple Nail Art
+Service	Price (CAD)	Duration	Description
+Sheer & Natural	$5	5 min	Clear, nude, or soft pink finish
+Classic French	$5	10 min	Timeless white tips
+Minimalist Design	$10	15 min	Simple, elegant patterns
+Accent Nail	$15	20 min	One special nail with subtle detail
+Quick Services
+Service	Price (CAD)	Duration	Description
+Express Natural Nails	$20	45 min	Quick but thorough nail care
+Maintenance Visit	$35	45 min	Keep hands or feet looking perfect between appointments
+Polish Change	$20	15 mins	Fresh polish with nail treatment
+Gel Color Change	$25	30 mins	New gel color with nail care
+Packages
+Service	Price (CAD)	Duration	Description
+Essential Care	$70	2 hours	Basic Manicure + Basic Pedicure
+Complete Luxury	$90	2 hour 30 min	Deluxe Manicure + Deluxe Pedicure
+Ultimate Experience	$115	2 hour 45 min	Premium Manicure + Premium Pedicure
+Long-Lasting Combo	$95	2 hour 30 min	Gel Manicure + Gel Pedicure
+Add-On Services
+Service	Price (CAD)	Description
+Warm Wax Treatment	$10	Deep moisturizing for hands or feet
+Extra Callus Care	$15	Additional attention for dry areas
+Nail Repair	$5 per nail	Fix damaged or broken nails
+Cuticle Treatment	$5	Intensive cuticle care
+Polish Removal	Free	Complimentary with any service
+Membership
+Level	Yearly Price	Benefits
+Silver	$100	- 20% off all services
+- 10% off all products
+- 1 FREE Polish Change - Hands monthly (value $25)
+- 1 friend pass per month (friend gets 20% off)
+Gold	$150	- 30% off all services
+- 15% off all products
+- 3 FREE Express Natural Nails monthly (value $90)
+- 2 friend passes per month (friends get 30% off)
+Platinum	$200	- 40% off all services
+- 20% off all products
+- 4 Free weekly express service
+- 4 Free add-on
+- 3 friend passes per month (friends get 40% off)

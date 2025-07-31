@@ -46,9 +46,9 @@ export function AppCard({
   return (
     <Card
       className={cn(
-        "card-clean h-full hover-clean p-6",
+        "h-full border border-gray-100 p-6 transition-colors duration-300 hover:border-gray-200",
         variant === "minimal" && "border-0",
-        variant === "featured" && "border-2",
+        variant === "featured" && "border-2 border-gray-200",
         layout === "horizontal" && "flex",
         className
       )}
@@ -112,10 +112,10 @@ export function AppCard({
               {features.map((feature) => (
                 <div
                   key={feature}
-                  className="flex items-center text-body text-muted-foreground group"
+                  className="flex items-center text-body text-muted-foreground"
                 >
-                  <div className="w-3 h-px bg-border mr-4 flex-shrink-0 transition-all duration-200 group-hover:w-6" />
-                  <span className="tracking-wide transition-colors duration-200 group-hover:text-foreground">{feature}</span>
+                  <div className="w-3 h-px bg-border mr-4 flex-shrink-0" />
+                  <span className="tracking-wide">{feature}</span>
                 </div>
               ))}
             </div>

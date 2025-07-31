@@ -19,7 +19,7 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
       description={service.description}
       price={service.price}
       duration={service.duration}
-      features={service.features}
+      features={service.features || []}
       actions={
         <AppButton variant="primary" fullWidth>
           Book Now

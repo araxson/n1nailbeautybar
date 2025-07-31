@@ -1,34 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { motion, AnimatePresence } from "framer-motion";
 import { navigationData } from "@/data/navigation";
 import { scrollToElement } from "@/lib/utils";
 import { SlidingTextBar } from "@/components/ui/sliding-text-bar";
 
-export function Header() {
+interface UnifiedHeaderProps {
+  isInitialLoading?: boolean;
+  onLoadingComplete?: () => void;
+}
+
+export function UnifiedHeader({ isInitialLoading = false, onLoadingComplete }: UnifiedHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHamburgerActive, setIsHamburgerActive] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [showLoader, setShowLoader] = useState(isInitialLoading);
+
+  useEffect(() => {
+    if (!isInitialLoading) return;
+
+    const timer = setTimeout(() => {
+      setShowLoader(false);
+      onLoadingComplete?.();
+    }, 1800); // Faster modern timing
+
+    return () => clearTimeout(timer);
+  }, [isInitialLoading, onLoadingComplete]);
 
   const toggleMenu = () => {
     if (!isMenuOpen) {
-      // Opening: hamburger collapses to single line → then sheet opens
-      setIsHamburgerActive(true); // Collapse to single line
+      setIsHamburgerActive(true);
       setTimeout(() => {
-        setIsMenuOpen(true); // Open menu sheet
-      }, 300); // Wait for collapse animation to complete
+        setIsMenuOpen(true);
+      }, 300);
     } else {
-      // Closing: X animates to line → sheet closes smoothly
       setIsClosing(true);
       setTimeout(() => {
         setIsMenuOpen(false);
-      }, 300); // Professional closing timing
+      }, 300);
       setTimeout(() => {
         setIsHamburgerActive(false);
         setIsClosing(false);
-      }, 900); // Allow full animation to complete
+      }, 900);
     }
   };
 
@@ -36,38 +53,30 @@ export function Header() {
     setIsClosing(true);
     setTimeout(() => {
       setIsMenuOpen(false);
-    }, 300); // Consistent with toggleMenu
+    }, 300);
     setTimeout(() => {
       setIsHamburgerActive(false);
       setIsClosing(false);
-    }, 900); // Allow full animation to complete
+    }, 900);
   };
 
   const handleMenuItemClick = (href: string, event: React.MouseEvent) => {
     event.preventDefault();
     
-    // If it's a section link (starts with #), handle smooth scrolling
     if (href.startsWith('#')) {
       const sectionId = href.substring(1);
-      
-      // Close the menu first
       setIsClosing(true);
       setTimeout(() => {
         setIsMenuOpen(false);
       }, 300);
-      
-      // Scroll to section after menu starts closing
       setTimeout(() => {
-        scrollToElement(sectionId, 80); // 80px offset for header
+        scrollToElement(sectionId, 80);
       }, 400);
-      
-      // Complete the hamburger animation
       setTimeout(() => {
         setIsHamburgerActive(false);
         setIsClosing(false);
       }, 900);
     } else {
-      // For other links, just close menu and navigate
       closeMenu();
       setTimeout(() => {
         window.location.href = href;
@@ -75,20 +84,19 @@ export function Header() {
     }
   };
 
-
   const menuSlideVariants = {
     closed: {
       x: "-100%",
       transition: {
-        duration: 0.6,
+        duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94] as const
       }
     },
     open: {
       x: "0%",
       transition: {
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94] as const
+        duration: 0.6,
+        ease: [0.23, 1, 0.32, 1] as const
       }
     }
   };
@@ -97,15 +105,17 @@ export function Header() {
     closed: { 
       opacity: 0, 
       x: -20,
-      y: 0
+      y: 20,
+      filter: "blur(1px)"
     },
     open: { 
       opacity: 1, 
       x: 0,
       y: 0,
+      filter: "blur(0px)",
       transition: {
         duration: 0.4,
-        ease: [0.25, 0.46, 0.45, 0.94] as const
+        ease: [0.23, 1, 0.32, 1] as const
       }
     }
   };
@@ -114,7 +124,7 @@ export function Header() {
     open: {
       transition: {
         staggerChildren: 0.08,
-        delayChildren: 0.15
+        delayChildren: 0.2
       }
     },
     closed: {
@@ -127,21 +137,80 @@ export function Header() {
 
   return (
     <>
+      {/* Black Loading Overlay */}
+      <AnimatePresence>
+        {showLoader && (
+          <motion.div
+            className="fixed inset-0 z-[9998] bg-black origin-top"
+            initial={{ y: "0%" }}
+            exit={{ y: "-100%" }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 0.61, 0.36, 1],
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Loading Logo - separate from header logo */}
+      <AnimatePresence>
+        {showLoader && (
+          <motion.div
+            className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              opacity: { duration: 0.2 },
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 2, opacity: 1 }}
+              exit={{ scale: 1, opacity: 0 }}
+              transition={{
+                scale: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+                opacity: { duration: 0.3 }
+              }}
+            >
+              <Image
+                src="/n1-logo.png"
+                alt="N1 Nail Beauty Bar"
+                width={120}
+                height={40}
+                className="h-10 w-auto"
+                priority
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Sliding Text Bar */}
-      <div className="absolute top-0 z-50 w-full overflow-hidden">
+      <motion.div 
+        className="absolute top-0 z-50 w-full overflow-hidden"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: showLoader ? 0 : 1, y: showLoader ? -20 : 0 }}
+        transition={{ delay: showLoader ? 0 : 0.8, duration: 0.8 }}
+      >
         <SlidingTextBar 
           text="PREMIUM NAIL SERVICES • LUXURY EXPERIENCE • BOOK YOUR APPOINTMENT TODAY"
           speed={25}
         />
-      </div>
+      </motion.div>
 
       <header 
         className="absolute top-8 z-50 w-full bg-transparent px-4 md:px-0"
       >
         <Container>
-          <div className="flex items-center justify-center md:justify-center h-20 relative">
-            {/* LEFT - Hamburger Menu (Mobile) */} 
-            <div className="absolute left-0 flex items-center md:hidden flex-shrink-0 -ml-4">
+          <div className="flex items-center justify-between h-20">
+            {/* LEFT - Hamburger Menu */}
+            <motion.div 
+              className="flex items-center md:hidden flex-shrink-0 -ml-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: showLoader ? 0 : 1 }}
+              transition={{ delay: showLoader ? 0 : 0.8, duration: 0.5 }}
+            >
               <motion.button 
                 onClick={toggleMenu}
                 className="w-10 h-10 flex flex-col justify-center items-center relative p-2"
@@ -160,7 +229,7 @@ export function Header() {
                   transition={{ 
                     duration: 0.3, 
                     ease: [0.22, 1, 0.36, 1] as const,
-                    delay: isHamburgerActive ? 0 : 0.6 // No delay when collapsing on click
+                    delay: isHamburgerActive ? 0 : 0.6
                   }}
                 />
                 <motion.span 
@@ -173,19 +242,42 @@ export function Header() {
                   transition={{ 
                     duration: 0.3, 
                     ease: [0.22, 1, 0.36, 1] as const,
-                    delay: isHamburgerActive ? 0 : 0.6 // No delay when collapsing on click
+                    delay: isHamburgerActive ? 0 : 0.6
                   }}
                 />
               </motion.button>
-            </div>
+            </motion.div>
 
-            {/* Logo space - filled by loading animation logo */}
-            <div className="flex items-center justify-center md:justify-start md:absolute md:left-0">
-              {/* Logo will be positioned here by loading animation */}
-            </div>
+            {/* CENTER - Logo */}
+            <motion.div 
+              className="flex items-center flex-1 md:flex-none justify-center px-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: showLoader ? 0 : 1 }}
+              transition={{ delay: showLoader ? 0 : 0.5, duration: 0.5 }}
+            >
+              <Link
+                href="/"
+                className="group transition-all duration-200"
+                aria-label="N1 Nail Beauty Bar - Home"
+              >
+                <Image
+                  src="/n1-logo.png"
+                  alt="N1 Nail Beauty Bar"
+                  width={120}
+                  height={40}
+                  className="h-8 md:h-10 w-auto"
+                  priority
+                />
+              </Link>
+            </motion.div>
 
-            {/* CENTER/RIGHT - Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
+            {/* RIGHT - Desktop Navigation */}
+            <motion.div 
+              className="hidden md:flex items-center space-x-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: showLoader ? 0 : 1 }}
+              transition={{ delay: showLoader ? 0 : 0.8, duration: 0.5 }}
+            >
               <nav className="flex items-center space-x-10">
                 {navigationData.mainNav.slice(1).map((item) => (
                   <a
@@ -200,51 +292,93 @@ export function Header() {
                       }
                     }}
                   >
-                    <span>
-                      {item.title}
-                    </span>
+                    <span>{item.title}</span>
                   </a>
                 ))}
               </nav>
-            </div>
+              
+              {/* Shopping Basket Icon */}
+              <button
+                className="w-10 h-10 flex items-center justify-center text-white/90 relative group hover:text-white transition-colors duration-200"
+                aria-label="Shopping cart"
+              >
+                <svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" 
+                  />
+                </svg>
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-white text-gray-900 rounded-full text-xs font-medium flex items-center justify-center">
+                  0
+                </span>
+              </button>
+            </motion.div>
 
+            {/* RIGHT - Mobile Shopping Cart */}
+            <motion.div 
+              className="flex items-center md:hidden flex-shrink-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: showLoader ? 0 : 1 }}
+              transition={{ delay: showLoader ? 0 : 0.8, duration: 0.5 }}
+            >
+              <button
+                className="w-10 h-10 flex items-center justify-center text-white/90 relative group hover:text-white transition-colors duration-200"
+                aria-label="Shopping cart"
+              >
+                <svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" 
+                  />
+                </svg>
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-white text-gray-900 rounded-full text-xs font-medium flex items-center justify-center">
+                  0
+                </span>
+              </button>
+            </motion.div>
           </div>
         </Container>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu - unchanged */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            className="fixed inset-0 z-[9999] bg-black md:hidden"
+            className="fixed inset-0 z-40 bg-black md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             exit={{ opacity: 0 }}
             transition={{ 
-              duration: 0.3, 
-              ease: [0.25, 0.46, 0.45, 0.94] as const 
+              duration: 0.4, 
+              ease: [0.23, 1, 0.32, 1] as const 
             }}
             onClick={closeMenu}
           />
         )}
       </AnimatePresence>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            className="fixed top-0 left-0 z-[10000] h-full w-full bg-white md:hidden"
+            className="fixed top-0 left-0 z-50 h-full w-full bg-white md:hidden"
             variants={menuSlideVariants}
             initial="closed"
             animate="open"
             exit="closed"
-            style={{
-              willChange: "transform",
-              backfaceVisibility: "hidden",
-              transform: "translateZ(0)",
-              WebkitFontSmoothing: "antialiased",
-              MozOsxFontSmoothing: "grayscale"
-            }}
           >
             {/* Close Button */}
             <div className="absolute top-6 right-6">

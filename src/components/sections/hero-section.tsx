@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { scrollToElement } from "@/lib/utils";
 
 export function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
@@ -26,32 +27,28 @@ export function HeroSection() {
 
   const slides = [
     {
-      image: "/hero-bg-1.jpg",
+      image: "/hero-desktop-1.webp",
+      imageMobile: "/hero-mobile-1.webp",
       title: "Premium Nail Care",
       subtitle: "Artisanal Excellence",
       description: "Where precision meets artistry in an atmosphere of refined elegance",
       motionType: "elegantRise"
     },
     {
-      image: "/hero-bg-2.jpg",
+      image: "/hero-desktop-2.webp",
+      imageMobile: "/hero-mobile-2.webp",
       title: "Bespoke Designs",
       subtitle: "Creative Artistry", 
       description: "Custom nail art crafted by our skilled artisans with meticulous attention to detail",
       motionType: "luxurySlide"
     },
     {
-      image: "/hero-bg-3.jpg",
+      image: "/hero-desktop-3.webp",
+      imageMobile: "/hero-mobile-3.webp",
       title: "Luxury Experience",
-      subtitle: "Elevated Service",
+      subtitle: "Elevated Service", 
       description: "Immerse yourself in our minimalistic sanctuary of beauty and sophistication",
       motionType: "sophisticatedScale"
-    },
-    {
-      image: "/hero-bg-4.jpg",
-      title: "Exceptional Wellness",
-      subtitle: "Holistic Beauty",
-      description: "A transformative journey that nurtures both your nails and your well-being",
-      motionType: "refinedFloat"
     }
   ];
 
@@ -304,8 +301,8 @@ export function HeroSection() {
           <motion.div
             className="absolute w-full h-[120%] -top-[10%] md:h-[130%] md:-top-[15%]"
             style={{
-              transform: isMobile ? 'none' : `translate3d(0, ${scrollY * 0.3}px, 0)`,
-              willChange: isMobile ? 'auto' : 'transform',
+              transform: `translate3d(0, ${scrollY * (isMobile ? 0.5 : 0.8)}px, 0)`,
+              willChange: 'transform',
             }}
             initial={false}
             animate={{ 
@@ -317,7 +314,7 @@ export function HeroSection() {
             }}
           >
             <Image
-              src={slide.image}
+              src={isMobile ? slide.imageMobile : slide.image}
               alt={slide.title}
               fill
               className="object-cover object-center"
@@ -401,7 +398,8 @@ export function HeroSection() {
             }}
           >
             <motion.button 
-              className="bg-white/10 border border-white/30 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-xs font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase overflow-hidden relative"
+              className="bg-white/10 border border-white/30 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-xs font-light tracking-[0.15em] sm:tracking-[0.2em] uppercase overflow-hidden relative cursor-pointer"
+              onClick={() => scrollToElement('services', 80)}
               whileHover={{ 
                 backgroundColor: "rgba(255, 255, 255, 0.15)",
                 borderColor: "rgba(255, 255, 255, 0.5)",
@@ -422,7 +420,7 @@ export function HeroSection() {
       
       {/* Premium Navigation Dots */}
       <motion.div 
-        className="absolute bottom-8 left-4 md:left-8 z-20 flex space-x-3 md:space-x-4"
+        className="absolute bottom-8 right-4 md:right-8 z-20 flex space-x-3 md:space-x-4"
         initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ delay: 3.2, duration: 1.8, ease: [0.22, 1, 0.36, 1] as const }}
