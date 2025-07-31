@@ -7,6 +7,11 @@ interface PageLoaderProps {
   children: React.ReactNode;
 }
 
+interface LoadingProps {
+  isLoading?: boolean;
+  onLoadingComplete?: () => void;
+}
+
 export function PageLoader({ children }: PageLoaderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [showOverlay, setShowOverlay] = useState(true);
@@ -36,7 +41,7 @@ export function PageLoader({ children }: PageLoaderProps) {
   // Clone children and pass loading props to Header
   const childrenWithProps = Children.map(children, (child) => {
     if (isValidElement(child)) {
-      return cloneElement(child as any, {
+      return cloneElement(child as React.ReactElement<LoadingProps>, {
         isLoading,
         onLoadingComplete: handleLoadingComplete,
       });

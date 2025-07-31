@@ -24,7 +24,7 @@ export function AboutSection() {
                 </h3>
                 <div className="space-y-6">
                   <p className="text-base font-light text-neutral-600 leading-relaxed tracking-[0.01em]">
-                    At N1 Nail Beauty Bar, we believe that nail care transcends mere beauty—it's an art form 
+                    At N1 Nail Beauty Bar, we believe that nail care transcends mere beauty—it&apos;s an art form 
                     that demands precision, creativity, and an unwavering commitment to excellence.
                   </p>
                   <p className="text-base font-light text-neutral-600 leading-relaxed tracking-[0.01em]">
@@ -63,7 +63,7 @@ export function AboutSection() {
             <div className="relative md:mt-8">
               <div className="relative">
                 <div className="absolute -top-4 -left-4 text-6xl md:text-7xl font-thin text-neutral-200 leading-none select-none">
-                  "
+                  &ldquo;
                 </div>
                 <div className="relative z-10 pt-8">
                   <blockquote className="text-lg md:text-xl font-light text-neutral-700 leading-relaxed mb-8 italic tracking-[0.01em]">

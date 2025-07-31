@@ -79,7 +79,7 @@ export function MembershipSection() {
         
         {/* Membership Cards */}
         <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
-          {membershipLevels.map((membership, index) => (
+          {membershipLevels.map((membership, _index) => (
             <MembershipCard 
               key={membership.id}
               membership={membership}
