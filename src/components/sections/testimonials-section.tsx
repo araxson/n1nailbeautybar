@@ -10,52 +10,54 @@ interface TestimonialCardProps {
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
     <div className="bg-white p-6 sm:p-8 border border-neutral-100 transition-all duration-300 hover:border-neutral-200 group">
-      {/* Rating Stars */}
-      <div className="flex items-center gap-1 mb-4">
-        {[...Array(5)].map((_, index) => (
-          <svg
-            key={index}
-            className={`w-4 h-4 ${index < testimonial.rating ? 'text-yellow-400' : 'text-neutral-200'}`}
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        ))}
-      </div>
-
-      {/* Review Text */}
-      <blockquote className="text-sm sm:text-base font-light text-neutral-700 leading-relaxed mb-6 italic">
-        &ldquo;{testimonial.review}&rdquo;
-      </blockquote>
-
-      {/* Client Info */}
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <h4 className="text-sm font-light text-neutral-800 tracking-[0.01em]">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="font-light text-neutral-800 tracking-[0.05em]">
               {testimonial.name}
-            </h4>
-            {testimonial.verified && (
-              <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-            )}
-          </div>
-          <p className="text-xs font-light text-neutral-500 tracking-[0.02em]">
-            {testimonial.service}
-          </p>
-          {testimonial.location && (
-            <p className="text-xs font-light text-neutral-400 tracking-[0.02em]">
-              {testimonial.location}
+            </h3>
+            <p className="text-xs font-light text-neutral-500 tracking-[0.1em] uppercase mt-1">
+              {testimonial.service}
             </p>
-          )}
+          </div>
+          <div className="flex space-x-0.5">
+            {[...Array(5)].map((_, index) => (
+              <svg
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                className={`w-3.5 h-3.5 ${
+                  index < testimonial.rating
+                    ? "text-neutral-800"
+                    : "text-neutral-200"
+                }`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.286 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.364-1.118L2.05 9.384c-.784-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
+              </svg>
+            ))}
+          </div>
         </div>
-        <div className="text-right">
-          <p className="text-xs font-light text-neutral-400">
-            {new Date(testimonial.date).toLocaleDateString('en-US', { 
-              month: 'short', 
-              year: 'numeric' 
+        <div>
+          <p className="text-sm font-light text-neutral-600 leading-relaxed italic">
+            &ldquo;{testimonial.review}&rdquo;
+          </p>
+        </div>
+        <div className="pt-4 border-t border-neutral-50">
+          <p className="text-xs font-light text-neutral-400 tracking-[0.05em]">
+            {testimonial.date.split(" ").map((part, i) => {
+              // Bold the "ago" part
+              if (part === "ago") {
+                return (
+                  <span
+                    key={`date-${testimonial.name}-${part}`}
+                    className="font-normal"
+                  >
+                    {part}
+                  </span>
+                );
+              }
+              return i > 0 ? ` ${part}` : part;
             })}
           </p>
         </div>
@@ -71,7 +73,7 @@ export function TestimonialsSection() {
   const loadMore = () => {
     setIsLoading(true);
     setTimeout(() => {
-      setVisibleCount(prev => Math.min(prev + 2, testimonialsData.length));
+      setVisibleCount((prev) => Math.min(prev + 2, testimonialsData.length));
       setIsLoading(false);
     }, 500);
   };
@@ -80,7 +82,10 @@ export function TestimonialsSection() {
   const hasMore = visibleCount < testimonialsData.length;
 
   return (
-    <section className="w-full py-12 sm:py-16 md:py-24 lg:py-32 bg-white" id="testimonials">
+    <section
+      className="w-full py-12 sm:py-16 md:py-24 lg:py-32 bg-white"
+      id="testimonials"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16">
@@ -92,14 +97,11 @@ export function TestimonialsSection() {
             What Our Clients Say
           </p>
         </div>
-        
+
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {visibleTestimonials.map((testimonial) => (
-            <TestimonialCard 
-              key={testimonial.id}
-              testimonial={testimonial}
-            />
+            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
           ))}
         </div>
 
@@ -113,14 +115,30 @@ export function TestimonialsSection() {
             >
               {isLoading ? (
                 <>
-                  <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-neutral-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-4 w-4 text-neutral-700"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                   Loading...
                 </>
               ) : (
-                'Load More Reviews'
+                "Load More Reviews"
               )}
             </button>
           </div>

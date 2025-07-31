@@ -25,7 +25,7 @@ export function StructuredData() {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 51.0280,
+      latitude: 51.028,
       longitude: -114.0952,
     },
     openingHoursSpecification: [
@@ -48,10 +48,7 @@ export function StructuredData() {
         closes: "17:00",
       },
     ],
-    sameAs: [
-      siteConfig.links.instagram,
-      siteConfig.links.facebook,
-    ],
+    sameAs: [siteConfig.links.instagram, siteConfig.links.facebook],
     priceRange: "$$",
     servesCuisine: "Nail Services",
     acceptsReservations: true,
@@ -74,7 +71,8 @@ export function StructuredData() {
           itemOffered: {
             "@type": "Service",
             name: "Classic Manicure",
-            description: "Professional nail shaping, cuticle care, and polish application",
+            description:
+              "Professional nail shaping, cuticle care, and polish application",
           },
         },
         {

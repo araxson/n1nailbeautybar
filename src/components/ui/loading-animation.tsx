@@ -10,7 +10,10 @@ interface LoadingAnimationProps {
   isLoading: boolean;
 }
 
-export function LoadingAnimation({ onComplete, isLoading }: LoadingAnimationProps) {
+export function LoadingAnimation({
+  onComplete,
+  isLoading,
+}: LoadingAnimationProps) {
   const [showCurtain, setShowCurtain] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [desktopLeftPosition, setDesktopLeftPosition] = useState("24px");
@@ -20,14 +23,14 @@ export function LoadingAnimation({ onComplete, isLoading }: LoadingAnimationProp
     const checkDesktop = () => {
       const isDesktopSize = window.innerWidth >= 768;
       setIsDesktop(isDesktopSize);
-      
+
       if (isDesktopSize) {
         // Calculate position for max-w-7xl (1280px) container
         const viewportWidth = window.innerWidth;
         const maxWidth = 1280; // max-w-7xl
         const containerPadding = 24; // px-6
-        
-        if (viewportWidth > maxWidth + (containerPadding * 2)) {
+
+        if (viewportWidth > maxWidth + containerPadding * 2) {
           // Container is centered, calculate offset
           const containerOffset = (viewportWidth - maxWidth) / 2;
           setDesktopLeftPosition(`${containerOffset + containerPadding}px`);
@@ -37,9 +40,9 @@ export function LoadingAnimation({ onComplete, isLoading }: LoadingAnimationProp
         }
       }
     };
-    
+
     checkDesktop();
-    window.addEventListener('resize', checkDesktop);
+    window.addEventListener("resize", checkDesktop);
 
     // Start curtain animation
     const curtainTimer = setTimeout(() => {
@@ -52,7 +55,7 @@ export function LoadingAnimation({ onComplete, isLoading }: LoadingAnimationProp
     }, 2600);
 
     return () => {
-      window.removeEventListener('resize', checkDesktop);
+      window.removeEventListener("resize", checkDesktop);
       clearTimeout(curtainTimer);
       clearTimeout(completeTimer);
     };
@@ -63,24 +66,24 @@ export function LoadingAnimation({ onComplete, isLoading }: LoadingAnimationProp
       {/* Logo Animation */}
       <motion.div
         className={isLoading ? "fixed z-[9999]" : "absolute z-[9999]"}
-        initial={{ 
+        initial={{
           top: "50%",
           left: "50%",
           x: "-50%",
           y: "-50%",
-          scale: 2
+          scale: 2,
         }}
-        animate={{ 
+        animate={{
           top: "52px", // 32px (top-8) + 20px (higher position) = upper part of header
           left: isDesktop ? desktopLeftPosition : "50%", // Desktop: calculated position for max-w-7xl, Mobile: center
           x: isDesktop ? "0%" : "-50%",
           y: "0%",
-          scale: 1
+          scale: 1,
         }}
         transition={{
           duration: 1.5,
           delay: 0.5,
-          ease: [0.22, 1, 0.36, 1]
+          ease: [0.22, 1, 0.36, 1],
         }}
       >
         <Link
@@ -107,7 +110,7 @@ export function LoadingAnimation({ onComplete, isLoading }: LoadingAnimationProp
           animate={{ y: showCurtain ? "-100%" : "0%" }}
           transition={{
             duration: 0.8,
-            ease: [0.22, 1, 0.36, 1]
+            ease: [0.22, 1, 0.36, 1],
           }}
         />
       )}

@@ -1,677 +1,742 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>N1 Nail Beauty Bar - Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: #000;
+        background: #fff;
+        line-height: 1.5;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 20mm;
+        margin: 0 auto;
+        background: white;
+        page-break-after: always;
+        position: relative;
+      }
+
+      .page:last-child {
+        page-break-after: auto;
+      }
+
+      .page-border {
+        position: absolute;
+        top: 10mm;
+        left: 10mm;
+        right: 10mm;
+        bottom: 10mm;
+        border: 2px solid #000;
+        pointer-events: none;
+      }
+
+      .page-content {
+        position: relative;
+        z-index: 1;
+        padding: 5mm;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 35px;
+        padding-bottom: 25px;
+        position: relative;
+      }
+
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 1px;
+        background: #000;
+      }
+
+      .logo-img {
+        height: 70px;
+        width: auto;
+        margin-bottom: 20px;
+        filter: grayscale(100%);
+      }
+
+      .logo {
+        font-size: 32px;
+        font-weight: 200;
+        letter-spacing: 6px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+      }
+
+      .tagline {
+        font-size: 13px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #444;
+        font-weight: 300;
+      }
+
+      .contact-info {
+        margin-top: 18px;
+        font-size: 11px;
+        color: #222;
+        letter-spacing: 0.5px;
+      }
+
+      /* Section Headers */
+      .section-title {
+        font-size: 20px;
+        font-weight: 200;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin: 35px 0 25px;
+        text-align: center;
+        position: relative;
+      }
+
+      /* Services Grid */
+      .services-grid {
+        margin-bottom: 30px;
+      }
+
+      .service-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 14px 0;
+        border-bottom: 1px dotted #ccc;
+        transition: all 0.3s ease;
+      }
+
+      .service-item:last-child {
+        border-bottom: none;
+      }
+
+      .service-left {
+        flex: 1;
+      }
+
+      .service-name {
+        font-weight: 400;
+        font-size: 14px;
+        margin-bottom: 5px;
+        letter-spacing: 0.5px;
+      }
+
+      .service-description {
+        font-size: 11px;
+        color: #555;
+        line-height: 1.5;
+        font-weight: 300;
+      }
+
+      .service-right {
+        text-align: right;
+        margin-left: 20px;
+      }
+
+      .service-price {
+        font-weight: 400;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+      }
+
+      .service-duration {
+        font-size: 10px;
+        color: #777;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+      }
+
+      /* Membership Section */
+      .membership-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .membership-card {
+        border: 1.5px solid #000;
+        padding: 25px 20px;
+        text-align: center;
+        position: relative;
+        background: #fafafa;
+      }
+
+      .membership-card:nth-child(2) {
+        background: #fff;
+        border-width: 2px;
+        transform: scale(1.02);
+      }
+
+      .membership-title {
+        font-size: 16px;
+        font-weight: 300;
+        letter-spacing: 3px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+      }
+
+      .membership-price {
+        font-size: 28px;
+        font-weight: 200;
+        margin-bottom: 20px;
+      }
+
+      .membership-price small {
+        font-size: 11px;
+        color: #555;
+        letter-spacing: 1px;
+      }
+
+      .membership-benefits {
+        list-style: none;
+        font-size: 10px;
+        text-align: left;
+        line-height: 2;
+        font-weight: 300;
+      }
+
+      .membership-benefits li {
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .membership-benefits li:before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: #000;
+      }
+
+      /* Print Styles */
+      @media print {
         body {
-            font-family: 'Inter', sans-serif;
-            color: #000;
-            background: #fff;
-            line-height: 1.5;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
         }
-        
-        @page {
-            size: A4;
-            margin: 0;
-        }
-        
+
         .page {
-            width: 210mm;
-            min-height: 297mm;
-            padding: 20mm;
-            margin: 0 auto;
-            background: white;
-            page-break-after: always;
-            position: relative;
+          margin: 0;
+          border: none;
+          box-shadow: none;
         }
-        
-        .page:last-child {
-            page-break-after: auto;
-        }
-        
-        .page-border {
-            position: absolute;
-            top: 10mm;
-            left: 10mm;
-            right: 10mm;
-            bottom: 10mm;
-            border: 2px solid #000;
-            pointer-events: none;
-        }
-        
-        .page-content {
-            position: relative;
-            z-index: 1;
-            padding: 5mm;
-        }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
-            padding-bottom: 25px;
-            position: relative;
-        }
-        
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 1px;
-            background: #000;
-        }
-        
-        .logo-img {
-            height: 70px;
-            width: auto;
-            margin-bottom: 20px;
-            filter: grayscale(100%);
-        }
-        
-        .logo {
-            font-size: 32px;
-            font-weight: 200;
-            letter-spacing: 6px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-        
-        .tagline {
-            font-size: 13px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #444;
-            font-weight: 300;
-        }
-        
-        .contact-info {
-            margin-top: 18px;
-            font-size: 11px;
-            color: #222;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Section Headers */
-        .section-title {
-            font-size: 20px;
-            font-weight: 200;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin: 35px 0 25px;
-            text-align: center;
-            position: relative;
-        }
-        
-        /* Services Grid */
-        .services-grid {
-            margin-bottom: 30px;
-        }
-        
-        .service-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 14px 0;
-            border-bottom: 1px dotted #ccc;
-            transition: all 0.3s ease;
-        }
-        
-        .service-item:last-child {
-            border-bottom: none;
-        }
-        
-        .service-left {
-            flex: 1;
-        }
-        
-        .service-name {
-            font-weight: 400;
-            font-size: 14px;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
-        }
-        
-        .service-description {
-            font-size: 11px;
-            color: #555;
-            line-height: 1.5;
-            font-weight: 300;
-        }
-        
-        .service-right {
-            text-align: right;
-            margin-left: 20px;
-        }
-        
-        .service-price {
-            font-weight: 400;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
-        
-        .service-duration {
-            font-size: 10px;
-            color: #777;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 2px;
-        }
-        
-        /* Membership Section */
-        .membership-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .membership-card {
-            border: 1.5px solid #000;
-            padding: 25px 20px;
-            text-align: center;
-            position: relative;
-            background: #fafafa;
-        }
-        
-        .membership-card:nth-child(2) {
-            background: #fff;
-            border-width: 2px;
-            transform: scale(1.02);
-        }
-        
-        .membership-title {
-            font-size: 16px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-        
-        .membership-price {
-            font-size: 28px;
-            font-weight: 200;
-            margin-bottom: 20px;
-        }
-        
-        .membership-price small {
-            font-size: 11px;
-            color: #555;
-            letter-spacing: 1px;
-        }
-        
-        .membership-benefits {
-            list-style: none;
-            font-size: 10px;
-            text-align: left;
-            line-height: 2;
-            font-weight: 300;
-        }
-        
-        .membership-benefits li {
-            position: relative;
-            padding-left: 15px;
-        }
-        
-        .membership-benefits li:before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: #000;
-        }
-        
-        /* Print Styles */
-        @media print {
-            body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            .page {
-                margin: 0;
-                border: none;
-                box-shadow: none;
-            }
-        }
-        
-        /* Two Column Layout for Some Sections */
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-        
-        .column-section {
-            margin-bottom: 25px;
-        }
-        
-        /* Additional Polish */
-        body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        /* Corner decoration */
-        .page-border::before,
-        .page-border::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 1px solid #000;
-        }
-        
-        .page-border::before {
-            top: -1px;
-            left: -1px;
-            border-right: none;
-            border-bottom: none;
-        }
-        
-        .page-border::after {
-            bottom: -1px;
-            right: -1px;
-            border-left: none;
-            border-top: none;
-        }
+      }
+
+      /* Two Column Layout for Some Sections */
+      .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+
+      .column-section {
+        margin-bottom: 25px;
+      }
+
+      /* Additional Polish */
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Corner decoration */
+      .page-border::before,
+      .page-border::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #000;
+      }
+
+      .page-border::before {
+        top: -1px;
+        left: -1px;
+        border-right: none;
+        border-bottom: none;
+      }
+
+      .page-border::after {
+        bottom: -1px;
+        right: -1px;
+        border-left: none;
+        border-top: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Page 1 -->
     <div class="page">
-        <div class="page-border"></div>
-        <div class="page-content">
-            <div class="header">
-            <img src="public/n1-logo.png" alt="N1 Nail Beauty Bar" class="logo-img">
-            <h1 class="logo">N1 NAIL BEAUTY BAR</h1>
-            <p class="tagline">Premium Nail Services with Luxury and Precision</p>
-            <div class="contact-info">
-                (403) 454-0488 • 2833 14 St SW, Calgary, AB T2T 3V3
-            </div>
+      <div class="page-border"></div>
+      <div class="page-content">
+        <div class="header">
+          <img
+            src="public/n1-logo.png"
+            alt="N1 Nail Beauty Bar"
+            class="logo-img"
+          />
+          <h1 class="logo">N1 NAIL BEAUTY BAR</h1>
+          <p class="tagline">Premium Nail Services with Luxury and Precision</p>
+          <div class="contact-info">
+            (403) 454-0488 • 2833 14 St SW, Calgary, AB T2T 3V3
+          </div>
         </div>
 
         <div class="section-title">Manicures</div>
         <div class="services-grid">
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Basic Manicure</div>
-                    <div class="service-description">Perfect nail shaping, cuticle care, relaxing hand massage, premium polish</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$30</div>
-                    <div class="service-duration">1 hour</div>
-                </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Basic Manicure</div>
+              <div class="service-description">
+                Perfect nail shaping, cuticle care, relaxing hand massage,
+                premium polish
+              </div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Deluxe Manicure</div>
-                    <div class="service-description">Everything in Basic + gentle hand scrub, moisturizing mask, longer massage, heated treatment</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$40</div>
-                    <div class="service-duration">1 hour 15 mins</div>
-                </div>
+            <div class="service-right">
+              <div class="service-price">$30</div>
+              <div class="service-duration">1 hour</div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Premium Manicure</div>
-                    <div class="service-description">Everything in Deluxe + warm wax treatment, hot stone massage, anti-aging care, complimentary champagne</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$55</div>
-                    <div class="service-duration">1 hour 30 mins</div>
-                </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Deluxe Manicure</div>
+              <div class="service-description">
+                Everything in Basic + gentle hand scrub, moisturizing mask,
+                longer massage, heated treatment
+              </div>
             </div>
+            <div class="service-right">
+              <div class="service-price">$40</div>
+              <div class="service-duration">1 hour 15 mins</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Premium Manicure</div>
+              <div class="service-description">
+                Everything in Deluxe + warm wax treatment, hot stone massage,
+                anti-aging care, complimentary champagne
+              </div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">$55</div>
+              <div class="service-duration">1 hour 30 mins</div>
+            </div>
+          </div>
         </div>
 
         <div class="section-title">Pedicures</div>
         <div class="services-grid">
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Basic Pedicure</div>
-                    <div class="service-description">Relaxing foot soak, expert nail care, callus removal, foot massage, perfect polish</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$45</div>
-                    <div class="service-duration">1 hour</div>
-                </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Basic Pedicure</div>
+              <div class="service-description">
+                Relaxing foot soak, expert nail care, callus removal, foot
+                massage, perfect polish
+              </div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Deluxe Pedicure</div>
-                    <div class="service-description">Everything in Basic + sea salt scrub, clay mask, warm booties, pressure point massage</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$55</div>
-                    <div class="service-duration">1 hour 15 mins</div>
-                </div>
+            <div class="service-right">
+              <div class="service-price">$45</div>
+              <div class="service-duration">1 hour</div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Premium Pedicure</div>
-                    <div class="service-description">Everything in Deluxe + intensive callus care, muscle relief treatment, luxury foot cream to take home</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$70</div>
-                    <div class="service-duration">1 hour 15 mins</div>
-                </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Deluxe Pedicure</div>
+              <div class="service-description">
+                Everything in Basic + sea salt scrub, clay mask, warm booties,
+                pressure point massage
+              </div>
             </div>
+            <div class="service-right">
+              <div class="service-price">$55</div>
+              <div class="service-duration">1 hour 15 mins</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Premium Pedicure</div>
+              <div class="service-description">
+                Everything in Deluxe + intensive callus care, muscle relief
+                treatment, luxury foot cream to take home
+              </div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">$70</div>
+              <div class="service-duration">1 hour 15 mins</div>
+            </div>
+          </div>
         </div>
 
         <div class="section-title">Long-Lasting Options</div>
         <div class="services-grid">
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Gel Manicure</div>
-                    <div class="service-description">Chip-free polish that lasts 3-4 weeks</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$45</div>
-                    <div class="service-duration">1 hour 15 mins</div>
-                </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Gel Manicure</div>
+              <div class="service-description">
+                Chip-free polish that lasts 3-4 weeks
+              </div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Gel Pedicure</div>
-                    <div class="service-description">Long-wearing polish for perfect toes</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$60</div>
-                    <div class="service-duration">1 hour 15 mins</div>
-                </div>
+            <div class="service-right">
+              <div class="service-price">$45</div>
+              <div class="service-duration">1 hour 15 mins</div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Nail Strengthening</div>
-                    <div class="service-description">Protective overlay to help nails grow stronger</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$50</div>
-                    <div class="service-duration">1 hour 15 mins</div>
-                </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Gel Pedicure</div>
+              <div class="service-description">
+                Long-wearing polish for perfect toes
+              </div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Extensions - Short</div>
-                    <div class="service-description">Natural-looking length enhancement</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$65</div>
-                    <div class="service-duration">1 hr 15 min</div>
-                </div>
+            <div class="service-right">
+              <div class="service-price">$60</div>
+              <div class="service-duration">1 hour 15 mins</div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Extensions - Medium</div>
-                    <div class="service-description">Classic length for everyday elegance</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$75</div>
-                    <div class="service-duration">1 hr 15 min</div>
-                </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Nail Strengthening</div>
+              <div class="service-description">
+                Protective overlay to help nails grow stronger
+              </div>
             </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-name">Extensions - Long</div>
-                    <div class="service-description">Sophisticated longer length</div>
-                </div>
-                <div class="service-right">
-                    <div class="service-price">$85</div>
-                    <div class="service-duration">1 hr 15 min</div>
-                </div>
+            <div class="service-right">
+              <div class="service-price">$50</div>
+              <div class="service-duration">1 hour 15 mins</div>
             </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Extensions - Short</div>
+              <div class="service-description">
+                Natural-looking length enhancement
+              </div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">$65</div>
+              <div class="service-duration">1 hr 15 min</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Extensions - Medium</div>
+              <div class="service-description">
+                Classic length for everyday elegance
+              </div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">$75</div>
+              <div class="service-duration">1 hr 15 min</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-left">
+              <div class="service-name">Extensions - Long</div>
+              <div class="service-description">Sophisticated longer length</div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">$85</div>
+              <div class="service-duration">1 hr 15 min</div>
+            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
 
     <!-- Page 2 -->
     <div class="page">
-        <div class="page-border"></div>
-        <div class="page-content">
-            <div class="two-column">
-            <div class="column-section">
-                <div class="section-title">Simple Nail Art</div>
-                <div class="services-grid">
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Sheer & Natural</div>
-                            <div class="service-description">Clear, nude, or soft pink finish</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$5</div>
-                            <div class="service-duration">5 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Classic French</div>
-                            <div class="service-description">Timeless white tips</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$5</div>
-                            <div class="service-duration">10 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Minimalist Design</div>
-                            <div class="service-description">Simple, elegant patterns</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$10</div>
-                            <div class="service-duration">15 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Accent Nail</div>
-                            <div class="service-description">One special nail with subtle detail</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$15</div>
-                            <div class="service-duration">20 min</div>
-                        </div>
-                    </div>
+      <div class="page-border"></div>
+      <div class="page-content">
+        <div class="two-column">
+          <div class="column-section">
+            <div class="section-title">Simple Nail Art</div>
+            <div class="services-grid">
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Sheer & Natural</div>
+                  <div class="service-description">
+                    Clear, nude, or soft pink finish
+                  </div>
                 </div>
+                <div class="service-right">
+                  <div class="service-price">$5</div>
+                  <div class="service-duration">5 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Classic French</div>
+                  <div class="service-description">Timeless white tips</div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$5</div>
+                  <div class="service-duration">10 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Minimalist Design</div>
+                  <div class="service-description">
+                    Simple, elegant patterns
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$10</div>
+                  <div class="service-duration">15 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Accent Nail</div>
+                  <div class="service-description">
+                    One special nail with subtle detail
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$15</div>
+                  <div class="service-duration">20 min</div>
+                </div>
+              </div>
             </div>
+          </div>
 
-            <div class="column-section">
-                <div class="section-title">Quick Services</div>
-                <div class="services-grid">
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Express Natural Nails</div>
-                            <div class="service-description">Quick but thorough nail care</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$20</div>
-                            <div class="service-duration">45 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Maintenance Visit</div>
-                            <div class="service-description">Keep hands or feet looking perfect</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$35</div>
-                            <div class="service-duration">45 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Polish Change</div>
-                            <div class="service-description">Fresh polish with nail treatment</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$20</div>
-                            <div class="service-duration">15 mins</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Gel Color Change</div>
-                            <div class="service-description">New gel color with nail care</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$25</div>
-                            <div class="service-duration">30 mins</div>
-                        </div>
-                    </div>
+          <div class="column-section">
+            <div class="section-title">Quick Services</div>
+            <div class="services-grid">
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Express Natural Nails</div>
+                  <div class="service-description">
+                    Quick but thorough nail care
+                  </div>
                 </div>
+                <div class="service-right">
+                  <div class="service-price">$20</div>
+                  <div class="service-duration">45 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Maintenance Visit</div>
+                  <div class="service-description">
+                    Keep hands or feet looking perfect
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$35</div>
+                  <div class="service-duration">45 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Polish Change</div>
+                  <div class="service-description">
+                    Fresh polish with nail treatment
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$20</div>
+                  <div class="service-duration">15 mins</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Gel Color Change</div>
+                  <div class="service-description">
+                    New gel color with nail care
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$25</div>
+                  <div class="service-duration">30 mins</div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
 
         <div class="two-column">
-            <div class="column-section">
-                <div class="section-title">Packages</div>
-                <div class="services-grid">
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Essential Care</div>
-                            <div class="service-description">Basic Manicure + Basic Pedicure</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$70</div>
-                            <div class="service-duration">2 hours</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Complete Luxury</div>
-                            <div class="service-description">Deluxe Manicure + Deluxe Pedicure</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$90</div>
-                            <div class="service-duration">2 hr 30 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Ultimate Experience</div>
-                            <div class="service-description">Premium Manicure + Premium Pedicure</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$115</div>
-                            <div class="service-duration">2 hr 45 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Long-Lasting Combo</div>
-                            <div class="service-description">Gel Manicure + Gel Pedicure</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$95</div>
-                            <div class="service-duration">2 hr 30 min</div>
-                        </div>
-                    </div>
+          <div class="column-section">
+            <div class="section-title">Packages</div>
+            <div class="services-grid">
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Essential Care</div>
+                  <div class="service-description">
+                    Basic Manicure + Basic Pedicure
+                  </div>
                 </div>
+                <div class="service-right">
+                  <div class="service-price">$70</div>
+                  <div class="service-duration">2 hours</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Complete Luxury</div>
+                  <div class="service-description">
+                    Deluxe Manicure + Deluxe Pedicure
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$90</div>
+                  <div class="service-duration">2 hr 30 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Ultimate Experience</div>
+                  <div class="service-description">
+                    Premium Manicure + Premium Pedicure
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$115</div>
+                  <div class="service-duration">2 hr 45 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Long-Lasting Combo</div>
+                  <div class="service-description">
+                    Gel Manicure + Gel Pedicure
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$95</div>
+                  <div class="service-duration">2 hr 30 min</div>
+                </div>
+              </div>
             </div>
+          </div>
 
-            <div class="column-section">
-                <div class="section-title">Add-On Services</div>
-                <div class="services-grid">
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Warm Wax Treatment</div>
-                            <div class="service-description">Deep moisturizing for hands or feet</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$10</div>
-                            <div class="service-duration">15 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Extra Callus Care</div>
-                            <div class="service-description">Additional attention for dry areas</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$15</div>
-                            <div class="service-duration">20 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Nail Repair</div>
-                            <div class="service-description">Fix damaged or broken nails</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$5/nail</div>
-                            <div class="service-duration">10 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Cuticle Treatment</div>
-                            <div class="service-description">Intensive cuticle care</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">$5</div>
-                            <div class="service-duration">15 min</div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-left">
-                            <div class="service-name">Polish Removal</div>
-                            <div class="service-description">Complimentary with any service</div>
-                        </div>
-                        <div class="service-right">
-                            <div class="service-price">Free</div>
-                            <div class="service-duration">5 min</div>
-                        </div>
-                    </div>
+          <div class="column-section">
+            <div class="section-title">Add-On Services</div>
+            <div class="services-grid">
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Warm Wax Treatment</div>
+                  <div class="service-description">
+                    Deep moisturizing for hands or feet
+                  </div>
                 </div>
+                <div class="service-right">
+                  <div class="service-price">$10</div>
+                  <div class="service-duration">15 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Extra Callus Care</div>
+                  <div class="service-description">
+                    Additional attention for dry areas
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$15</div>
+                  <div class="service-duration">20 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Nail Repair</div>
+                  <div class="service-description">
+                    Fix damaged or broken nails
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$5/nail</div>
+                  <div class="service-duration">10 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Cuticle Treatment</div>
+                  <div class="service-description">Intensive cuticle care</div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">$5</div>
+                  <div class="service-duration">15 min</div>
+                </div>
+              </div>
+              <div class="service-item">
+                <div class="service-left">
+                  <div class="service-name">Polish Removal</div>
+                  <div class="service-description">
+                    Complimentary with any service
+                  </div>
+                </div>
+                <div class="service-right">
+                  <div class="service-price">Free</div>
+                  <div class="service-duration">5 min</div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
 
         <div class="section-title">Membership Plans</div>
         <div class="membership-grid">
-            <div class="membership-card">
-                <h3 class="membership-title">SILVER</h3>
-                <div class="membership-price">$100<small>/year</small></div>
-                <ul class="membership-benefits">
-                    <li>10% off all services</li>
-                    <li>10% off all products</li>
-                    <li>1 FREE Polish Change monthly</li>
-                    <li>1 friend pass per month (20% off)</li>
-                </ul>
-            </div>
-            <div class="membership-card">
-                <h3 class="membership-title">GOLD</h3>
-                <div class="membership-price">$200<small>/year</small></div>
-                <ul class="membership-benefits">
-                    <li>20% off all services</li>
-                    <li>15% off all products</li>
-                    <li>3 FREE Express Natural Nails monthly</li>
-                    <li>2 friend passes per month (30% off)</li>
-                </ul>
-            </div>
-            <div class="membership-card">
-                <h3 class="membership-title">PLATINUM</h3>
-                <div class="membership-price">$300<small>/year</small></div>
-                <ul class="membership-benefits">
-                    <li>30% off all services</li>
-                    <li>20% off all products</li>
-                    <li>4 Free weekly express service</li>
-                    <li>4 Free add-on</li>
-                    <li>3 friend passes per month (40% off)</li>
-                </ul>
-            </div>
+          <div class="membership-card">
+            <h3 class="membership-title">SILVER</h3>
+            <div class="membership-price">$100<small>/year</small></div>
+            <ul class="membership-benefits">
+              <li>10% off all services</li>
+              <li>10% off all products</li>
+              <li>1 FREE Polish Change monthly</li>
+              <li>1 friend pass per month (20% off)</li>
+            </ul>
+          </div>
+          <div class="membership-card">
+            <h3 class="membership-title">GOLD</h3>
+            <div class="membership-price">$200<small>/year</small></div>
+            <ul class="membership-benefits">
+              <li>20% off all services</li>
+              <li>15% off all products</li>
+              <li>3 FREE Express Natural Nails monthly</li>
+              <li>2 friend passes per month (30% off)</li>
+            </ul>
+          </div>
+          <div class="membership-card">
+            <h3 class="membership-title">PLATINUM</h3>
+            <div class="membership-price">$300<small>/year</small></div>
+            <ul class="membership-benefits">
+              <li>30% off all services</li>
+              <li>20% off all products</li>
+              <li>4 Free weekly express service</li>
+              <li>4 Free add-on</li>
+              <li>3 friend passes per month (40% off)</li>
+            </ul>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

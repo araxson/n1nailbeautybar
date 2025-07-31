@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect, Children, cloneElement, isValidElement } from "react";
+import {
+  useState,
+  useEffect,
+  Children,
+  cloneElement,
+  isValidElement,
+} from "react";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
 
 interface PageLoaderProps {
@@ -28,13 +34,13 @@ export function PageLoader({ children }: PageLoaderProps) {
   // Prevent scroll during loading
   useEffect(() => {
     if (isLoading) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isLoading]);
 

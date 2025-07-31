@@ -18,7 +18,9 @@ export function GalleryCard({ item, className = "" }: GalleryCardProps) {
       <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
         <div className="text-center space-y-4">
           <div className="text-4xl">—</div>
-          <span className="text-small text-muted-foreground group-hover:text-foreground transition-colors duration-200 tracking-wider uppercase">{item.title}</span>
+          <span className="text-small text-muted-foreground group-hover:text-foreground transition-colors duration-200 tracking-wider uppercase">
+            {item.title}
+          </span>
         </div>
       </div>
 
@@ -38,4 +40,3 @@ export function GalleryCard({ item, className = "" }: GalleryCardProps) {
     />
   );
 }
-

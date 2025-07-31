@@ -33,7 +33,8 @@ export const servicesData: readonly ServiceCategory[] = [
       {
         id: "basic-manicure",
         title: "Basic Manicure",
-        description: "Perfect nail shaping, cuticle care, relaxing hand massage, premium polish",
+        description:
+          "Perfect nail shaping, cuticle care, relaxing hand massage, premium polish",
         price: "$30",
         duration: "1 hour",
         category: "manicures",
@@ -48,7 +49,8 @@ export const servicesData: readonly ServiceCategory[] = [
       {
         id: "deluxe-manicure",
         title: "Deluxe Manicure",
-        description: "Everything in Basic + gentle hand scrub, moisturizing mask, longer massage, heated treatment",
+        description:
+          "Everything in Basic + gentle hand scrub, moisturizing mask, longer massage, heated treatment",
         price: "$40",
         duration: "1 hour 15 mins",
         category: "manicures",
@@ -64,7 +66,8 @@ export const servicesData: readonly ServiceCategory[] = [
       {
         id: "premium-manicure",
         title: "Premium Manicure",
-        description: "Everything in Deluxe + warm wax treatment, hot stone massage, anti-aging care, complimentary champagne",
+        description:
+          "Everything in Deluxe + warm wax treatment, hot stone massage, anti-aging care, complimentary champagne",
         price: "$55",
         duration: "1 hour 30 mins",
         category: "manicures",
@@ -87,7 +90,8 @@ export const servicesData: readonly ServiceCategory[] = [
       {
         id: "basic-pedicure",
         title: "Basic Pedicure",
-        description: "Relaxing foot soak, expert nail care, callus removal, foot massage, perfect polish",
+        description:
+          "Relaxing foot soak, expert nail care, callus removal, foot massage, perfect polish",
         price: "$45",
         duration: "1 hour",
         category: "pedicures",
@@ -103,7 +107,8 @@ export const servicesData: readonly ServiceCategory[] = [
       {
         id: "deluxe-pedicure",
         title: "Deluxe Pedicure",
-        description: "Everything in Basic + sea salt scrub, clay mask, warm booties, pressure point massage",
+        description:
+          "Everything in Basic + sea salt scrub, clay mask, warm booties, pressure point massage",
         price: "$55",
         duration: "1 hour 15 mins",
         category: "pedicures",
@@ -118,7 +123,8 @@ export const servicesData: readonly ServiceCategory[] = [
       {
         id: "premium-pedicure",
         title: "Premium Pedicure",
-        description: "Everything in Deluxe + intensive callus care, muscle relief treatment, luxury foot cream to take home",
+        description:
+          "Everything in Deluxe + intensive callus care, muscle relief treatment, luxury foot cream to take home",
         price: "$70",
         duration: "1 hour 15 mins",
         category: "pedicures",

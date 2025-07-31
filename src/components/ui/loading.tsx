@@ -75,9 +75,7 @@ export function Loading({
   return (
     <div className="flex flex-col items-center justify-center space-y-4">
       {renderContent()}
-      {text && (
-        <p className="text-small text-muted-foreground">{text}</p>
-      )}
+      {text && <p className="text-small text-muted-foreground">{text}</p>}
     </div>
   );
 }
@@ -95,7 +93,8 @@ export function Skeleton({ className, lines = 1 }: SkeletonProps) {
     <div className={cn("space-y-2", className)}>
       {Array.from({ length: lines }).map((_, i) => (
         <div
-          key={`skeleton-line-${i}`}
+          // eslint-disable-next-line react/no-array-index-key
+          key={i}
           className={cn(
             "bg-muted rounded",
             i === lines - 1 ? "w-3/4" : "w-full",

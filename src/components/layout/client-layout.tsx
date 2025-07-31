@@ -18,21 +18,24 @@ export function ClientLayout({ children }: ClientLayoutProps) {
 
   useEffect(() => {
     if (isLoading) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isLoading]);
 
   return (
     <>
       {/* Loading animation - always rendered for logo */}
-      <LoadingAnimation onComplete={handleLoadingComplete} isLoading={isLoading} />
-      
+      <LoadingAnimation
+        onComplete={handleLoadingComplete}
+        isLoading={isLoading}
+      />
+
       {/* Main content - always rendered */}
       <div className="relative w-full bg-white min-h-screen">
         <Header />

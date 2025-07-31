@@ -8,9 +8,14 @@ interface MembershipCardProps {
   isPopular?: boolean;
 }
 
-function MembershipCard({ membership, isPopular = false }: MembershipCardProps) {
+function MembershipCard({
+  membership,
+  isPopular = false,
+}: MembershipCardProps) {
   return (
-    <div className={`relative border border-neutral-200 bg-white hover:border-neutral-300 transition-all duration-300 group ${isPopular ? 'ring-1 ring-neutral-300' : ''}`}>
+    <div
+      className={`relative border border-neutral-200 bg-white hover:border-neutral-300 transition-all duration-300 group ${isPopular ? "ring-1 ring-neutral-300" : ""}`}
+    >
       {isPopular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
           <span className="bg-neutral-800 text-white px-4 py-1 text-xs font-light tracking-[0.2em] uppercase">
@@ -18,7 +23,7 @@ function MembershipCard({ membership, isPopular = false }: MembershipCardProps) 
           </span>
         </div>
       )}
-      
+
       <div className="p-8 lg:p-10">
         {/* Header */}
         <div className="text-center mb-8">
@@ -38,8 +43,11 @@ function MembershipCard({ membership, isPopular = false }: MembershipCardProps) 
 
         {/* Benefits */}
         <div className="space-y-4">
-          {membership.benefits.map((benefit, index) => (
-            <div key={index} className="flex items-start space-x-3">
+          {membership.benefits.map((benefit) => (
+            <div
+              key={`${membership.title}-${benefit.substring(0, 20)}`}
+              className="flex items-start space-x-3"
+            >
               <div className="w-1 h-1 bg-neutral-400 rounded-full flex-shrink-0 mt-2.5" />
               <span className="text-sm font-light text-neutral-600 leading-relaxed tracking-[0.01em]">
                 {benefit}
@@ -58,7 +66,10 @@ export function MembershipSection() {
   const toggleTerms = () => setIsTermsExpanded(!isTermsExpanded);
 
   return (
-    <section className="w-full py-16 sm:py-20 md:py-24 lg:py-32 bg-neutral-50/30" id="membership">
+    <section
+      className="w-full py-16 sm:py-20 md:py-24 lg:py-32 bg-neutral-50/30"
+      id="membership"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
@@ -71,19 +82,20 @@ export function MembershipSection() {
           </p>
           <div className="max-w-2xl mx-auto">
             <p className="text-base font-light text-neutral-600 leading-relaxed tracking-[0.01em]">
-              Join our exclusive membership program and enjoy year-round savings, 
-              complimentary services, and special perks designed for our most valued clients.
+              Join our exclusive membership program and enjoy year-round
+              savings, complimentary services, and special perks designed for
+              our most valued clients.
             </p>
           </div>
         </div>
-        
+
         {/* Membership Cards */}
         <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
           {membershipLevels.map((membership, _index) => (
-            <MembershipCard 
+            <MembershipCard
               key={membership.id}
               membership={membership}
-              isPopular={membership.id === 'gold'}
+              isPopular={membership.id === "gold"}
             />
           ))}
         </div>
@@ -92,49 +104,84 @@ export function MembershipSection() {
         <div className="mt-16 sm:mt-20 text-center">
           <div className="max-w-3xl mx-auto">
             <p className="text-sm font-light text-neutral-500 leading-relaxed tracking-[0.01em] mb-8">
-              All memberships are billed annually and include exclusive access to member-only events, 
-              priority booking, and special seasonal promotions.
+              All memberships are billed annually and include exclusive access
+              to member-only events, priority booking, and special seasonal
+              promotions.
             </p>
-            
+
             {/* Terms & Conditions Accordion */}
             <div className="border-t border-neutral-200">
-              <div 
+              <div
                 className="flex items-center justify-center gap-3 py-6 cursor-pointer group"
                 onClick={toggleTerms}
               >
                 <span className="text-xs font-light tracking-[0.15em] text-neutral-400 group-hover:text-neutral-600 transition-colors duration-300 uppercase">
                   Membership Terms & Conditions
                 </span>
-                <svg 
-                  className={`w-4 h-4 text-neutral-400 group-hover:text-neutral-600 transition-all duration-300 ${isTermsExpanded ? 'rotate-180' : ''}`} 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                <svg
+                  className={`w-4 h-4 text-neutral-400 group-hover:text-neutral-600 transition-all duration-300 ${isTermsExpanded ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </div>
-              
+
               {/* Terms Content */}
-              <div className={`overflow-hidden transition-all duration-300 ${isTermsExpanded ? 'max-h-96 opacity-100 pb-8' : 'max-h-0 opacity-0'}`}>
+              <div
+                className={`overflow-hidden transition-all duration-300 ${isTermsExpanded ? "max-h-96 opacity-100 pb-8" : "max-h-0 opacity-0"}`}
+              >
                 <div className="text-left space-y-4 text-sm font-light text-neutral-600 leading-relaxed">
                   <div>
-                    <h4 className="font-normal text-neutral-700 mb-2">Membership Terms:</h4>
+                    <h4 className="font-normal text-neutral-700 mb-2">
+                      Membership Terms:
+                    </h4>
                     <ul className="space-y-2 ml-4">
-                      <li>• All memberships are billed annually and non-refundable</li>
-                      <li>• Monthly benefits reset on the same date each month</li>
-                      <li>• Unused monthly benefits do not roll over to the following month</li>
-                      <li>• Member discounts cannot be combined with other promotions</li>
-                      <li>• Friend passes are valid for one-time use per person</li>
+                      <li>
+                        • All memberships are billed annually and non-refundable
+                      </li>
+                      <li>
+                        • Monthly benefits reset on the same date each month
+                      </li>
+                      <li>
+                        • Unused monthly benefits do not roll over to the
+                        following month
+                      </li>
+                      <li>
+                        • Member discounts cannot be combined with other
+                        promotions
+                      </li>
+                      <li>
+                        • Friend passes are valid for one-time use per person
+                      </li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-normal text-neutral-700 mb-2">Booking & Cancellation:</h4>
+                    <h4 className="font-normal text-neutral-700 mb-2">
+                      Booking & Cancellation:
+                    </h4>
                     <ul className="space-y-2 ml-4">
-                      <li>• Members receive priority booking during peak seasons</li>
-                      <li>• 24-hour cancellation notice required to avoid forfeiting benefits</li>
-                      <li>• Membership can be cancelled with 30 days written notice</li>
-                      <li>• Early cancellation forfeits remaining membership benefits</li>
+                      <li>
+                        • Members receive priority booking during peak seasons
+                      </li>
+                      <li>
+                        • 24-hour cancellation notice required to avoid
+                        forfeiting benefits
+                      </li>
+                      <li>
+                        • Membership can be cancelled with 30 days written
+                        notice
+                      </li>
+                      <li>
+                        • Early cancellation forfeits remaining membership
+                        benefits
+                      </li>
                     </ul>
                   </div>
                 </div>

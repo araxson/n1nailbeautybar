@@ -30,7 +30,7 @@ export function Container({
     md: "max-w-5xl",
     lg: "max-w-7xl",
     xl: "max-w-8xl",
-    full: "max-w-full"
+    full: "max-w-full",
   };
 
   const paddingMap = {
@@ -38,16 +38,18 @@ export function Container({
     sm: "px-4",
     md: "px-6",
     lg: "px-8",
-    xl: "px-12"
+    xl: "px-12",
   };
 
   return (
-    <div className={cn(
-      "mx-auto w-full",
-      sizeMap[size],
-      paddingMap[padding],
-      className
-    )}>
+    <div
+      className={cn(
+        "mx-auto w-full",
+        sizeMap[size],
+        paddingMap[padding],
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -68,26 +70,26 @@ export function Section({
     sm: "py-8",
     md: "py-12",
     lg: "py-16",
-    xl: "py-24"
+    xl: "py-24",
   };
 
   const backgroundMap = {
     default: "bg-white",
     muted: "bg-gray-50",
-    accent: "bg-gray-100"
+    accent: "bg-gray-100",
   };
 
   return (
-    <section className={cn(
-      "w-full",
-      paddingMap[padding],
-      backgroundMap[background],
-      border && "border-b border-gray-200",
-      className
-    )}>
-      <Container>
-        {children}
-      </Container>
+    <section
+      className={cn(
+        "w-full",
+        paddingMap[padding],
+        backgroundMap[background],
+        border && "border-b border-gray-200",
+        className
+      )}
+    >
+      <Container>{children}</Container>
     </section>
   );
 }

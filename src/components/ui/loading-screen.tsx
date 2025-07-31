@@ -38,12 +38,12 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
       <motion.div
         className="fixed inset-0 z-[9999] bg-black origin-top"
         initial={{ y: "0%" }}
-        animate={{ 
-          y: startSliding ? "-100%" : "0%" 
+        animate={{
+          y: startSliding ? "-100%" : "0%",
         }}
         transition={{
           duration: 0.6,
-          ease: [0.22, 0.61, 0.36, 1] // Custom bezier for smooth acceleration
+          ease: [0.22, 0.61, 0.36, 1], // Custom bezier for smooth acceleration
         }}
       />
 
@@ -51,12 +51,12 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
       <motion.div
         className="fixed inset-0 z-[10000] flex items-center justify-center pointer-events-none origin-top"
         initial={{ y: "0%" }}
-        animate={{ 
-          y: startSliding ? "-100%" : "0%" 
+        animate={{
+          y: startSliding ? "-100%" : "0%",
         }}
         transition={{
           duration: 0.6,
-          ease: [0.22, 0.61, 0.36, 1] // Same as background for harmony
+          ease: [0.22, 0.61, 0.36, 1], // Same as background for harmony
         }}
       >
         <motion.div
@@ -64,16 +64,16 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
           initial={{
             x: 0,
             y: 0,
-            scale: 2
+            scale: 2,
           }}
           animate={{
             x: 0,
             y: "calc(-50vh + 68px)", // Exact header position (adjust based on your header height)
-            scale: 1
+            scale: 1,
           }}
           transition={{
             duration: 1.8,
-            ease: [0.22, 1, 0.36, 1] // Smooth deceleration
+            ease: [0.22, 1, 0.36, 1], // Smooth deceleration
           }}
         >
           <Image

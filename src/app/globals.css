@@ -99,7 +99,6 @@
     }
   }
 
-
   .delay-100 {
     animation-delay: 0.1s;
   }
@@ -186,5 +185,32 @@
 
   .animate-fadeIn.animate-active {
     animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  /* Mobile Safari parallax optimization */
+  @supports (-webkit-touch-callout: none) {
+    /* iOS Safari specific styles */
+    .hero-parallax-container {
+      -webkit-transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      -webkit-perspective: 1000;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      perspective: 1000;
+    }
+  }
+
+  /* Smooth scrolling optimization for mobile */
+  @media (max-width: 768px) {
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Reduce parallax effect on small screens to prevent jitter */
+    .hero-parallax-mobile {
+      will-change: transform;
+      transform-style: preserve-3d;
+    }
   }
 }

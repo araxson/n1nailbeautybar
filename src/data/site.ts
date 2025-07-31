@@ -16,7 +16,8 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   name: "N1 Nail Beauty Bar - Calgary's Premier Nail Salon",
-  description: "Experience luxury nail services in Calgary. Professional manicures, pedicures, nail art & spa treatments at N1 Nail Beauty Bar on 14 St SW. Book your appointment today!",
+  description:
+    "Experience luxury nail services in Calgary. Professional manicures, pedicures, nail art & spa treatments at N1 Nail Beauty Bar on 14 St SW. Book your appointment today!",
   url: "https://n1nailbeautybar.com",
   ogImage: "/og-image.jpg",
   links: {

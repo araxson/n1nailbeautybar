@@ -1,4 +1,3 @@
-
 Shelby Kneabone
 2 reviews·5 photos
 3 days ago
@@ -328,7 +327,7 @@ Amazing feedback. Thank you so much for giving us 5 stars!
 Sensuous Express
 5 reviews
 Edited 3 weeks ago
-*Edited in response to owner
+\*Edited in response to owner
 
 Not sure why you would even write this knowing that I not only texted you the proof with documents I also send them to your Instagram DM and once you receive them you blocked me. You have my number aswell my Instagram and as stated in the text I sent you months ago my refund can be sent to the email I provided aswell I also stated you could let me know when I could pick it up. Reviews are here for a reason why I'm adding to my experience. Don't see why yr dragging this out all you had to do was refund me last year. IM STILL WAITING...
 

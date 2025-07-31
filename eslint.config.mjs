@@ -18,21 +18,24 @@ const eslintConfig = [
       "@next/next/no-html-link-for-pages": "error",
       "@next/next/no-sync-scripts": "error",
       "@next/next/no-unwanted-polyfillio": "error",
-      
+
       // TypeScript specific rules
-      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-var-requires": "error",
-      
+
       // React specific rules
       "react/jsx-key": "error",
       "react/jsx-no-duplicate-props": "error",
       "react/jsx-no-undef": "error",
       "react/no-array-index-key": "warn",
       "react/no-unescaped-entities": "error",
-      
+
       // General rules
-      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "no-console": ["warn", { allow: ["warn", "error"] }],
       "no-debugger": "error",
       "no-unused-vars": "off", // Use TypeScript version instead
       "prefer-const": "error",

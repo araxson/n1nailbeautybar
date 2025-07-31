@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
 
   // Performance optimizations
   poweredByHeader: false,
-  
+
   // SEO-friendly trailing slash
   trailingSlash: false,
 

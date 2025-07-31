@@ -15,7 +15,7 @@ export function ContactSection() {
               Connect With Us
             </p>
           </div>
-        
+
           {/* Contact Grid */}
           <div className="max-w-3xl mx-auto">
             <div className="grid md:grid-cols-3 gap-16 md:gap-20 mb-24 md:mb-40">
@@ -23,23 +23,20 @@ export function ContactSection() {
                 {
                   title: "Phone",
                   content: siteConfig.contact.phone,
-                  link: `tel:${siteConfig.contact.phone.replace(/[^\d]/g, '')}`
+                  link: `tel:${siteConfig.contact.phone.replace(/[^\d]/g, "")}`,
                 },
                 {
-                  title: "Email", 
+                  title: "Email",
                   content: siteConfig.contact.email,
-                  link: `mailto:${siteConfig.contact.email}`
+                  link: `mailto:${siteConfig.contact.email}`,
                 },
                 {
                   title: "Studio",
                   content: siteConfig.contact.address.replace(", ", "\n"),
-                  link: null
-                }
+                  link: null,
+                },
               ].map((contact) => (
-                <div 
-                  key={contact.title}
-                  className="text-center group"
-                >
+                <div key={contact.title} className="text-center group">
                   <div className="mb-10">
                     <h3 className="text-sm font-light tracking-[0.3em] text-neutral-800 mb-6 uppercase">
                       {contact.title}
@@ -47,7 +44,7 @@ export function ContactSection() {
                     <div className="h-[0.5px] w-8 bg-neutral-300 mx-auto" />
                   </div>
                   {contact.link ? (
-                    <a 
+                    <a
                       href={contact.link}
                       className="text-base font-light text-neutral-600 hover:text-neutral-900 tracking-[0.01em] inline-block transition-colors duration-500"
                     >
@@ -55,10 +52,10 @@ export function ContactSection() {
                     </a>
                   ) : (
                     <div className="text-base font-light text-neutral-600 tracking-[0.01em] leading-relaxed">
-                      {contact.content.split('\n').map((line, i) => (
-                        <span key={i}>
+                      {contact.content.split("\n").map((line, i) => (
+                        <span key={`${contact.title}-${line.substring(0, 10)}`}>
                           {line}
-                          {i < contact.content.split('\n').length - 1 && <br />}
+                          {i < contact.content.split("\n").length - 1 && <br />}
                         </span>
                       ))}
                     </div>
@@ -66,7 +63,7 @@ export function ContactSection() {
                 </div>
               ))}
             </div>
-          
+
             {/* Hours */}
             <div className="text-center py-16 md:py-20 border-t border-neutral-100/50">
               <h3 className="text-lg md:text-xl font-thin tracking-[0.3em] text-neutral-800 mb-6 uppercase">
@@ -82,9 +79,9 @@ export function ContactSection() {
                     { day: "Thursday", hours: "10:00 AM - 07:00 PM" },
                     { day: "Friday", hours: "10:00 AM - 07:00 PM" },
                     { day: "Saturday", hours: "10:00 AM - 06:00 PM" },
-                    { day: "Sunday", hours: "10:00 AM - 05:00 PM" }
+                    { day: "Sunday", hours: "10:00 AM - 05:00 PM" },
                   ].map((schedule) => (
-                    <div 
+                    <div
                       key={schedule.day}
                       className="flex justify-between items-center py-1 group"
                     >
@@ -99,7 +96,8 @@ export function ContactSection() {
                 </div>
                 <div className="mt-12 pt-8 border-t border-neutral-100/40">
                   <p className="text-xs font-light text-neutral-500 leading-relaxed tracking-[0.05em]">
-                    Appointments recommended<br />
+                    Appointments recommended
+                    <br />
                     Walk-ins welcome based on availability
                   </p>
                 </div>
@@ -108,7 +106,7 @@ export function ContactSection() {
           </div>
         </div>
       </div>
-      
+
       {/* Google Maps - Full Width */}
       <div className="mt-24 md:mt-40">
         <div className="max-w-5xl mx-auto px-6 md:px-16 mb-16 md:mb-20">
@@ -121,11 +119,11 @@ export function ContactSection() {
         </div>
         <div className="w-full">
           <div className="relative overflow-hidden">
-            <iframe 
+            <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2509.317100934556!2d-114.0949576!3d51.0287638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x53716f56220c4e35%3A0xbcaa9eef3c4cb58f!2sN1%20Nail%20Beauty%20Bar!5e0!3m2!1sen!2sca!4v1753573318785!5m2!1sen!2sca"
               width="100%"
               height="400"
-              style={{ border: 0, filter: 'grayscale(20%)' }}
+              style={{ border: 0, filter: "grayscale(20%)" }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
