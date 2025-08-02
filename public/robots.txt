@@ -1,5 +1,5 @@
 # robots.txt for N1 Nail Beauty Bar
-# https://n1nailbeautybar.com
+# https://n1nail.ca
 
 # Allow all crawlers
 User-agent: *
@@ -9,7 +9,7 @@ Allow: /
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://n1nailbeautybar.com/sitemap.xml
+Sitemap: https://n1nail.ca/sitemap.xml
 
 # Block development files
 Disallow: /_next/

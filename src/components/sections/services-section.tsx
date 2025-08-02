@@ -1,17 +1,18 @@
 "use client";
 
-import { servicesData, type Service } from "@/data/services";
+import { type SquareService } from "@/app/api/services/route";
+import { useServices } from "@/hooks/use-services";
 import { useState } from "react";
 
 // Generate booking link for any service
-const generateBookingLink = (service: Service): string => {
+const generateBookingLink = (service: SquareService): string => {
   return (
-    service.bookingLink || `https://n1nailbeautybar.com/book/${service.id}`
+    service.bookingLink || `https://n1nail.ca/book/${service.id}`
   );
 };
 
 interface ServiceItemProps {
-  service: Service;
+  service: SquareService;
   isLast?: boolean;
 }
 
@@ -100,7 +101,7 @@ function ServiceItem({ service, isLast = false }: ServiceItemProps) {
 
 interface ServiceCategoryProps {
   title: string;
-  services: readonly Service[];
+  services: readonly SquareService[];
   isLast?: boolean;
 }
 
@@ -138,6 +139,42 @@ function ServiceCategory({
 }
 
 export function ServicesSection() {
+  const { categories, isLoading, error } = useServices();
+
+  if (isLoading) {
+    return (
+      <section
+        className="w-full py-12 sm:py-16 md:py-24 lg:py-32 bg-white"
+        id="services"
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center space-x-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-600"></div>
+              <span className="text-sm text-neutral-600 tracking-[0.1em]">Loading services...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section
+        className="w-full py-12 sm:py-16 md:py-24 lg:py-32 bg-white"
+        id="services"
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className="text-center">
+            <p className="text-sm text-red-600 mb-4">Error loading services: {error}</p>
+            <p className="text-xs text-neutral-500">Please try refreshing the page</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       className="w-full py-12 sm:py-16 md:py-24 lg:py-32 bg-white"
@@ -157,12 +194,12 @@ export function ServicesSection() {
 
         {/* All Services Categories */}
         <div className="space-y-12 sm:space-y-16 md:space-y-20">
-          {servicesData.map((category, categoryIndex) => (
+          {categories.map((category, categoryIndex) => (
             <ServiceCategory
               key={category.id}
               title={category.title}
               services={category.services}
-              isLast={categoryIndex === servicesData.length - 1}
+              isLast={categoryIndex === categories.length - 1}
             />
           ))}
         </div>

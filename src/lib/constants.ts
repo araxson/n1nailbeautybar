@@ -44,7 +44,7 @@ export const STORAGE_KEYS = {
 export const SEO = {
   DEFAULT_TITLE: "N1 Nail Beauty Bar",
   DEFAULT_DESCRIPTION: "Premium nail services with luxury and precision",
-  SITE_URL: "https://n1nailbeautybar.com",
+  SITE_URL: "https://n1nail.ca",
   OG_IMAGE: "/og-image.jpg",
 } as const;
 

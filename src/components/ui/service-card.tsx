@@ -2,10 +2,10 @@
 
 import { AppCard } from "@/components/ui/app-card";
 import { AppButton } from "@/components/ui/app-button";
-import { Service } from "@/data/services";
+import { SquareService } from "@/app/api/services/route";
 
 interface ServiceCardProps {
-  service: Service;
+  service: SquareService;
   className?: string;
 }
 

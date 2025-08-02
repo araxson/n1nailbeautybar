@@ -1,10 +1,11 @@
 "use client";
 
-import { membershipLevels, type MembershipLevel } from "@/data/services";
+import { type SquareMembershipLevel } from "@/app/api/memberships/route";
+import { useMemberships } from "@/hooks/use-services";
 import { useState } from "react";
 
 interface MembershipCardProps {
-  membership: MembershipLevel;
+  membership: SquareMembershipLevel;
   isPopular?: boolean;
 }
 
@@ -62,6 +63,7 @@ function MembershipCard({
 
 export function MembershipSection() {
   const [isTermsExpanded, setIsTermsExpanded] = useState(false);
+  const { memberships, isLoading, error } = useMemberships();
 
   const toggleTerms = () => setIsTermsExpanded(!isTermsExpanded);
 
@@ -90,15 +92,29 @@ export function MembershipSection() {
         </div>
 
         {/* Membership Cards */}
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
-          {membershipLevels.map((membership, _index) => (
-            <MembershipCard
-              key={membership.id}
-              membership={membership}
-              isPopular={membership.id === "gold"}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center space-x-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-600"></div>
+              <span className="text-sm text-neutral-600 tracking-[0.1em]">Loading memberships...</span>
+            </div>
+          </div>
+        ) : error ? (
+          <div className="text-center">
+            <p className="text-sm text-red-600 mb-4">Error loading memberships: {error}</p>
+            <p className="text-xs text-neutral-500">Please try refreshing the page</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
+            {memberships.map((membership, _index) => (
+              <MembershipCard
+                key={membership.id}
+                membership={membership}
+                isPopular={membership.id === "gold"}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Additional Info */}
         <div className="mt-16 sm:mt-20 text-center">
