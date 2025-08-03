@@ -38,7 +38,7 @@ export const faqsData: readonly FAQ[] = [
     id: "services-2",
     question: "What's the difference between your manicure tiers?",
     answer:
-      "Basic includes nail shaping, cuticle care, hand massage, and polish. Deluxe adds scrub, mask, and heated treatment. Premium includes everything plus warm wax treatment, hot stone massage, anti-aging care, and complimentary champagne.",
+      "Basic includes nail shaping, cuticle care, hand massage, and polish. Deluxe adds scrub, mask, and heated treatment. Premium includes everything plus warm wax treatment, hot stone massage.",
     category: "services",
   },
   {
