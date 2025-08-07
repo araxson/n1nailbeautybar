@@ -57,8 +57,8 @@ export const CONTACT = {
 
 // Social media links
 export const SOCIAL_LINKS = {
-  INSTAGRAM: "https://instagram.com/n1nailbeautybar",
-  FACEBOOK: "https://facebook.com/n1nailbeautybar",
+  INSTAGRAM: "http://instagram.com/n1nailbeautybar/",
+  FACEBOOK: "https://www.facebook.com/n1nailbeautybar",
 } as const;
 
 // Performance constants

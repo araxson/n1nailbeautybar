@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { navigationData } from "@/data/navigation";
 import { scrollToElement } from "@/lib/utils";
 import { SlidingTextBar } from "@/components/ui/sliding-text-bar";
+import { siteConfig } from "@/data/site";
 
 interface UnifiedHeaderProps {
   isInitialLoading?: boolean;
@@ -454,7 +455,7 @@ export function UnifiedHeader({
                 initial="closed"
                 animate="open"
               >
-                {navigationData.mainNav.slice(1).map((item, index) => (
+                {navigationData.mainNav.map((item, index) => (
                   <div key={item.title}>
                     <motion.a
                       href={item.href}
@@ -468,7 +469,7 @@ export function UnifiedHeader({
                     >
                       <motion.span>{item.title}</motion.span>
                     </motion.a>
-                    {index < navigationData.mainNav.slice(1).length - 1 && (
+                    {index < navigationData.mainNav.length - 1 && (
                       <motion.div
                         className="w-full h-px bg-gray-100"
                         variants={menuItemVariants}
@@ -506,7 +507,7 @@ export function UnifiedHeader({
                   </motion.a>
 
                   <motion.a
-                    href="https://www.facebook.com"
+                    href={siteConfig.links.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors duration-200"
@@ -524,7 +525,7 @@ export function UnifiedHeader({
                   </motion.a>
 
                   <motion.a
-                    href="https://www.instagram.com"
+                    href={siteConfig.links.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors duration-200"

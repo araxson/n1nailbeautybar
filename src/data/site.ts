@@ -21,8 +21,8 @@ export const siteConfig: SiteConfig = {
   url: "https://n1nail.ca",
   ogImage: "/og-image.jpg",
   links: {
-    instagram: "https://instagram.com/n1nailbeautybar",
-    facebook: "https://facebook.com/n1nailbeautybar",
+    instagram: "http://instagram.com/n1nailbeautybar/",
+    facebook: "https://www.facebook.com/n1nailbeautybar",
   },
   contact: {
     phone: "(403) 454-0488",

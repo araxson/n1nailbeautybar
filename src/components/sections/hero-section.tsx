@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { scrollToElement } from "@/lib/utils";
 
 export function HeroSection() {
-  const [scrollY, setScrollY] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -18,6 +17,7 @@ export function HeroSection() {
     null
   );
   const [isMobile, setIsMobile] = useState(false);
+  const [swipeProgress, setSwipeProgress] = useState(0);
 
   // Detect mobile device
   useEffect(() => {
@@ -144,46 +144,23 @@ export function HeroSection() {
     },
   };
 
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(window.pageYOffset);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Premium slide transitions with orchestrated timing
+  // Instant slide transitions without delays
   const changeSlide = useCallback(
     (newSlideIndex: number | ((prev: number) => number)) => {
       if (isTransitioning) return;
 
       setIsTransitioning(true);
 
-      // Step 1: Begin sophisticated text exit animation
-      setTextVisible(false);
+      // Change slide immediately
+      if (typeof newSlideIndex === "function") {
+        setCurrentSlide(newSlideIndex);
+      } else {
+        setCurrentSlide(newSlideIndex);
+      }
+      setAnimationKey((prev) => prev + 1);
 
-      // Step 2: Change slide after text exits with reduced timing
-      setTimeout(() => {
-        if (typeof newSlideIndex === "function") {
-          setCurrentSlide(newSlideIndex);
-        } else {
-          setCurrentSlide(newSlideIndex);
-        }
-        setAnimationKey((prev) => prev + 1);
-
-        // Step 3: Quick entrance timing
-        setTimeout(() => {
-          setTextVisible(true);
-          setIsTransitioning(false);
-        }, 200); // Reduced pause
-      }, 500); // Reduced exit timing
+      // Reset transition state immediately
+      setIsTransitioning(false);
     },
     [isTransitioning]
   );
@@ -198,24 +175,18 @@ export function HeroSection() {
     return () => clearInterval(timer);
   }, [slides.length, isTransitioning, changeSlide]);
 
-  // Enhanced mobile touch handlers for swipe
+  // Enhanced mobile touch handlers for Instagram-like swipe
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (!isMobile) return; // Only handle on mobile
-
     const touch = e.targetTouches[0];
     if (touch) {
       setTouchStart({ x: touch.clientX, y: touch.clientY });
+      setSwipeProgress(0);
     }
     setTouchEnd(null);
-
-    // Add visual feedback on touch start for desktop only
-    if (!isMobile) {
-      (e.currentTarget as HTMLElement).style.cursor = "grabbing";
-    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isMobile || !touchStart) return;
+    if (!touchStart) return;
 
     const touch = e.targetTouches[0];
     if (touch) {
@@ -223,11 +194,16 @@ export function HeroSection() {
       setTouchEnd(currentPos);
 
       // Calculate movement
-      const deltaX = Math.abs(touchStart.x - currentPos.x);
+      const deltaX = touchStart.x - currentPos.x;
       const deltaY = Math.abs(touchStart.y - currentPos.y);
+      const swipeDistance = Math.abs(deltaX);
+
+      // Calculate swipe progress for visual feedback
+      const progress = Math.min(swipeDistance / 100, 1);
+      setSwipeProgress(progress);
 
       // If horizontal movement is dominant and significant, prevent scrolling
-      if (deltaX > deltaY && deltaX > 15) {
+      if (swipeDistance > deltaY && swipeDistance > 10) {
         e.preventDefault();
         e.stopPropagation();
       }
@@ -235,34 +211,27 @@ export function HeroSection() {
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!isMobile) return; // Only handle on mobile
-
-    // Reset cursor for desktop only
-    if (!isMobile) {
-      (e.currentTarget as HTMLElement).style.cursor = "grab";
-    }
-
     if (!touchStart || !touchEnd || isTransitioning) {
       setTouchStart(null);
       setTouchEnd(null);
+      setSwipeProgress(0);
       return;
     }
 
     const deltaX = touchStart.x - touchEnd.x;
     const deltaY = Math.abs(touchStart.y - touchEnd.y);
     const swipeDistance = Math.abs(deltaX);
-    const minSwipeDistance = 40; // Optimized for mobile
-    const maxVerticalDistance = 100; // Allow more vertical tolerance
+    const minSwipeDistance = 50; // Instagram-like sensitivity
+    const maxVerticalDistance = 80; // Tighter vertical tolerance
 
-    // More forgiving swipe detection for mobile
+    // Instagram-like swipe detection
     const isHorizontalSwipe = swipeDistance > minSwipeDistance;
-    const isNotVerticalScroll =
-      deltaY < maxVerticalDistance || swipeDistance > deltaY * 1.5;
+    const isNotVerticalScroll = deltaY < maxVerticalDistance;
 
     if (isHorizontalSwipe && isNotVerticalScroll) {
       // Haptic feedback if available
       if (navigator.vibrate) {
-        navigator.vibrate(50);
+        navigator.vibrate(30);
       }
 
       if (deltaX > 0) {
@@ -277,6 +246,7 @@ export function HeroSection() {
     // Reset touch states
     setTouchStart(null);
     setTouchEnd(null);
+    setSwipeProgress(0);
   };
 
   const nextSlide = () => {
@@ -296,40 +266,29 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative h-screen min-h-[600px] w-full overflow-hidden touch-pan-y"
+      className="relative h-screen min-h-[600px] w-full overflow-hidden"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       style={{
-        touchAction: isMobile ? "pan-y pinch-zoom" : "auto",
+        touchAction: "pan-y",
         WebkitUserSelect: "none",
         userSelect: "none",
-        cursor: isMobile ? "default" : "grab",
       }}
     >
-      {/* Professional Parallax Images */}
+      {/* Professional Images without Parallax */}
       {slides.map((slide, index) => (
         <div
           key={`slide-${slide.title.replace(/\s+/g, "-").toLowerCase()}`}
-          className="absolute inset-0 w-full h-full overflow-hidden hero-parallax-container"
+          className="absolute inset-0 w-full h-full overflow-hidden"
         >
           <motion.div
-            className={`absolute w-full h-[120%] -top-[10%] md:h-[130%] md:-top-[15%] ${isMobile ? "hero-parallax-mobile" : ""}`}
-            style={{
-              transform: isMobile
-                ? `translateY(${Math.round(scrollY * 0.3)}px)`
-                : `translate3d(0, ${scrollY * 0.8}px, 0)`,
-              willChange: "transform",
-              backfaceVisibility: "hidden",
-              perspective: 1000,
-              WebkitBackfaceVisibility: "hidden",
-              WebkitPerspective: 1000,
-            }}
+            className="absolute w-full h-full"
             initial={false}
             animate={{
               opacity: index === currentSlide ? 1 : 0,
               transition: {
-                duration: 2.0,
+                duration: 0.3,
                 ease: [0.22, 1, 0.36, 1] as const,
               },
             }}
@@ -483,7 +442,7 @@ export function HeroSection() {
       {/* Premium Navigation Arrows */}
       <motion.button
         onClick={prevSlide}
-        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center text-white/40 group"
+        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center text-white/40"
         aria-label="Previous slide"
         initial={{ opacity: 0, x: -50, filter: "blur(10px)" }}
         animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
@@ -492,19 +451,13 @@ export function HeroSection() {
           duration: 1.6,
           ease: [0.22, 1, 0.36, 1] as const,
         }}
-        whileHover={{
-          x: -5,
-          transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
-        }}
         whileTap={{ scale: 0.95 }}
       >
-        <motion.div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 rounded-full backdrop-blur-sm transition-all duration-500" />
         <motion.svg
-          className="w-4 h-4 md:w-5 md:h-5 relative z-10"
+          className="w-4 h-4 md:w-5 md:h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          whileHover={{ color: "rgba(255, 255, 255, 0.9)" }}
         >
           <path
             strokeLinecap="round"
@@ -517,7 +470,7 @@ export function HeroSection() {
 
       <motion.button
         onClick={nextSlide}
-        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center text-white/40 group"
+        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center text-white/40"
         aria-label="Next slide"
         initial={{ opacity: 0, x: 50, filter: "blur(10px)" }}
         animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
@@ -526,19 +479,13 @@ export function HeroSection() {
           duration: 1.6,
           ease: [0.22, 1, 0.36, 1] as const,
         }}
-        whileHover={{
-          x: 5,
-          transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
-        }}
         whileTap={{ scale: 0.95 }}
       >
-        <motion.div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 rounded-full backdrop-blur-sm transition-all duration-500" />
         <motion.svg
-          className="w-4 h-4 md:w-5 md:h-5 relative z-10"
+          className="w-4 h-4 md:w-5 md:h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          whileHover={{ color: "rgba(255, 255, 255, 0.9)" }}
         >
           <path
             strokeLinecap="round"
