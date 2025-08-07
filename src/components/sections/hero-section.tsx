@@ -173,17 +173,19 @@ export function HeroSection() {
     return () => clearInterval(timer);
   }, [slides.length, isTransitioning, changeSlide]);
 
-  // Enhanced mobile touch handlers for Instagram-like swipe
+  // Professional carousel touch handlers for smooth swipe experience
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (isTransitioning) return;
+    
     const touch = e.targetTouches[0];
     if (touch) {
       setTouchStart({ x: touch.clientX, y: touch.clientY });
+      setTouchEnd(null);
     }
-    setTouchEnd(null);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!touchStart) return;
+    if (!touchStart || isTransitioning) return;
 
     const touch = e.targetTouches[0];
     if (touch) {
@@ -191,41 +193,45 @@ export function HeroSection() {
       setTouchEnd(currentPos);
 
       // Calculate movement
-      const deltaX = touchStart.x - currentPos.x;
+      const deltaX = Math.abs(touchStart.x - currentPos.x);
       const deltaY = Math.abs(touchStart.y - currentPos.y);
-      const swipeDistance = Math.abs(deltaX);
 
-      // If horizontal movement is dominant and significant, prevent scrolling
-      if (swipeDistance > deltaY && swipeDistance > 10) {
+      // Professional threshold: prioritize horizontal swipes over vertical scrolling
+      if (deltaX > deltaY && deltaX > 15) {
         e.preventDefault();
         e.stopPropagation();
       }
     }
   };
 
-  const handleTouchEnd = (_e: React.TouchEvent) => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchStart || !touchEnd || isTransitioning) {
       setTouchStart(null);
       setTouchEnd(null);
       return;
     }
 
+    e.preventDefault();
+    e.stopPropagation();
+
     const deltaX = touchStart.x - touchEnd.x;
     const deltaY = Math.abs(touchStart.y - touchEnd.y);
     const swipeDistance = Math.abs(deltaX);
-    const minSwipeDistance = 50; // Instagram-like sensitivity
-    const maxVerticalDistance = 80; // Tighter vertical tolerance
+    
+    // Professional carousel settings
+    const minSwipeDistance = 40; // Easier swipe threshold
+    const maxVerticalDistance = 100; // Allow some vertical tolerance
 
-    // Instagram-like swipe detection
     const isHorizontalSwipe = swipeDistance > minSwipeDistance;
     const isNotVerticalScroll = deltaY < maxVerticalDistance;
 
     if (isHorizontalSwipe && isNotVerticalScroll) {
-      // Haptic feedback if available
-      if (navigator.vibrate) {
-        navigator.vibrate(30);
+      // Haptic feedback for better UX
+      if ('vibrate' in navigator) {
+        navigator.vibrate(25);
       }
 
+      // Professional direction logic
       if (deltaX > 0) {
         // Swipe left - next slide
         changeSlide((prev) => (prev + 1) % slides.length);
@@ -235,7 +241,7 @@ export function HeroSection() {
       }
     }
 
-    // Reset touch states
+    // Always reset touch states
     setTouchStart(null);
     setTouchEnd(null);
   };
@@ -257,7 +263,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative h-screen min-h-[600px] w-full overflow-hidden"
+      className="hero-carousel relative h-screen min-h-[600px] w-full overflow-hidden"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -265,23 +271,34 @@ export function HeroSection() {
         touchAction: "pan-y",
         WebkitUserSelect: "none",
         userSelect: "none",
+        WebkitTouchCallout: "none",
+        WebkitTapHighlightColor: "transparent",
       }}
     >
-      {/* Professional Images without Parallax */}
+      {/* Professional Carousel Images with Smooth Transitions */}
       {slides.map((slide, index) => (
         <div
           key={`slide-${slide.title.replace(/\s+/g, "-").toLowerCase()}`}
           className="absolute inset-0 w-full h-full overflow-hidden"
+          style={{
+            willChange: index === currentSlide ? "opacity" : "auto",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+          }}
         >
           <motion.div
             className="absolute w-full h-full"
             initial={false}
             animate={{
               opacity: index === currentSlide ? 1 : 0,
+              scale: index === currentSlide ? 1 : 1.05,
               transition: {
-                duration: 0.3,
-                ease: [0.22, 1, 0.36, 1] as const,
+                duration: 0.6,
+                ease: [0.25, 0.1, 0.25, 1] as const,
               },
+            }}
+            style={{
+              willChange: "opacity, transform",
             }}
           >
             <Image
@@ -289,9 +306,14 @@ export function HeroSection() {
               alt={slide.title}
               fill
               className="object-cover object-center"
-              priority={index === 0}
+              priority={index <= 1}
               sizes="100vw"
-              quality={90}
+              quality={95}
+              style={{
+                userSelect: "none",
+                WebkitUserSelect: "none",
+                pointerEvents: "none",
+              }}
             />
           </motion.div>
         </div>

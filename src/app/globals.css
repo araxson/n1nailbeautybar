@@ -225,6 +225,9 @@
     height: 100vh !important;
     overflow: hidden !important;
     -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    will-change: transform;
   }
 
   /* Prevent body scroll when sheet is open */
@@ -240,5 +243,32 @@
     height: 100vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Professional touch interaction utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Optimize carousel for touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    /* Touch device optimizations */
+    .hero-carousel {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: pan-y;
+    }
+    
+    .hero-carousel button {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 }

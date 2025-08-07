@@ -404,15 +404,30 @@ export function UnifiedHeader({
             initial="closed"
             animate="open"
             exit="closed"
+            style={{
+              willChange: "transform",
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              WebkitTouchCallout: "none",
+            }}
           >
-            {/* Close Button */}
-            <div className="absolute top-6 right-6">
+            {/* Close Button - Fixed for better touch interaction */}
+            <div className="absolute top-4 right-4 z-50">
               <motion.button
-                onClick={closeMenu}
-                className="w-10 h-10 flex flex-col justify-center items-center relative p-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  closeMenu();
+                }}
+                onTouchEnd={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  closeMenu();
+                }}
+                className="w-12 h-12 flex flex-col justify-center items-center relative p-3 cursor-pointer touch-manipulation"
                 aria-label="Close menu"
-                whileHover={{ opacity: 0.8 }}
-                whileTap={{ opacity: 1 }}
+                whileHover={{ opacity: 0.7, scale: 1.05 }}
+                whileTap={{ opacity: 1, scale: 0.95 }}
                 initial={{ opacity: 0, rotate: 45, filter: "blur(2px)" }}
                 animate={{
                   opacity: 1,
@@ -424,9 +439,15 @@ export function UnifiedHeader({
                   duration: 0.5,
                   ease: [0.23, 1, 0.32, 1] as const,
                 }}
+                style={{
+                  WebkitTapHighlightColor: "transparent",
+                  WebkitTouchCallout: "none",
+                  WebkitUserSelect: "none",
+                  userSelect: "none",
+                }}
               >
                 <motion.span
-                  className="w-6 h-0.5 bg-gray-800 absolute"
+                  className="w-6 h-0.5 bg-gray-800 absolute rounded-full"
                   animate={{
                     rotate: isMenuOpen && !isClosing ? 45 : 0,
                   }}
@@ -436,7 +457,7 @@ export function UnifiedHeader({
                   }}
                 />
                 <motion.span
-                  className="w-6 h-0.5 bg-gray-800 absolute"
+                  className="w-6 h-0.5 bg-gray-800 absolute rounded-full"
                   animate={{
                     rotate: isMenuOpen && !isClosing ? -45 : 0,
                   }}
