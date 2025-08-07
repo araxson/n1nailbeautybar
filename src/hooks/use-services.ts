@@ -32,10 +32,12 @@ export function useServices(): UseServicesReturn {
       setIsLoading(true);
       setError(null);
       
-      const response = await fetch('/api/services', {
+      const response = await fetch(`/api/services?_t=${Date.now()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
         },
       });
       
@@ -87,10 +89,12 @@ export function useMemberships(): UseMembershipsReturn {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await fetch('/api/memberships', {
+      const response = await fetch(`/api/memberships?_t=${Date.now()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
         },
       });
       
@@ -104,8 +108,8 @@ export function useMemberships(): UseMembershipsReturn {
         throw new Error(data.error);
       }
       
-      // Always use fallback data for now since Square doesn't have subscription plans
-      const fallbackMemberships: SquareMembershipLevel[] = [
+      // Use hardcoded membership data instead of Square API
+      const hardcodedMemberships: SquareMembershipLevel[] = [
         {
           id: "silver",
           title: "Silver",
@@ -115,7 +119,7 @@ export function useMemberships(): UseMembershipsReturn {
             "10% off all products",
             "1 friend pass per month (friend gets 10% off)",
           ],
-          squareId: "fallback-silver",
+          squareId: "hardcoded-silver",
         },
         {
           id: "gold",
@@ -127,7 +131,7 @@ export function useMemberships(): UseMembershipsReturn {
             "1 FREE Express Natural Nails monthly (value $30)",
             "2 friend passes per month (friends get 20% off)",
           ],
-          squareId: "fallback-gold",
+          squareId: "hardcoded-gold",
         },
         {
           id: "platinum",
@@ -139,11 +143,11 @@ export function useMemberships(): UseMembershipsReturn {
             "2 FREE Express Natural Nails monthly (value $60)",
             "3 friend passes per month (friends get 30% off)",
           ],
-          squareId: "fallback-platinum",
+          squareId: "hardcoded-platinum",
         },
       ];
       
-      setMemberships(fallbackMemberships);
+      setMemberships(hardcodedMemberships);
       setLastUpdated(data.lastUpdated || null);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';

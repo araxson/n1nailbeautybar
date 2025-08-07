@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "@/components/ui/container";
 import { motion, AnimatePresence } from "framer-motion";
 import { navigationData } from "@/data/navigation";
@@ -12,10 +12,19 @@ export function Header() {
   const [isHamburgerActive, setIsHamburgerActive] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  // Cleanup function to reset body scroll when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('body-scroll-locked');
+    };
+  }, []);
+
   const toggleMenu = () => {
     if (!isMenuOpen) {
       // Opening: hamburger collapses to single line → then sheet opens
       setIsHamburgerActive(true); // Collapse to single line
+      // Prevent body scroll when menu opens
+      document.body.classList.add('body-scroll-locked');
       setTimeout(() => {
         setIsMenuOpen(true); // Open menu sheet
       }, 300); // Wait for collapse animation to complete
@@ -24,6 +33,8 @@ export function Header() {
       setIsClosing(true);
       setTimeout(() => {
         setIsMenuOpen(false);
+        // Re-enable body scroll when menu closes
+        document.body.classList.remove('body-scroll-locked');
       }, 300); // Professional closing timing
       setTimeout(() => {
         setIsHamburgerActive(false);
@@ -36,6 +47,8 @@ export function Header() {
     setIsClosing(true);
     setTimeout(() => {
       setIsMenuOpen(false);
+      // Re-enable body scroll when menu closes
+      document.body.classList.remove('body-scroll-locked');
     }, 300); // Consistent with toggleMenu
     setTimeout(() => {
       setIsHamburgerActive(false);
@@ -54,6 +67,8 @@ export function Header() {
       setIsClosing(true);
       setTimeout(() => {
         setIsMenuOpen(false);
+        // Re-enable body scroll when menu closes
+        document.body.classList.remove('body-scroll-locked');
       }, 300);
 
       // Scroll to section after menu starts closing
@@ -219,6 +234,14 @@ export function Header() {
               ease: [0.25, 0.46, 0.45, 0.94] as const,
             }}
             onClick={closeMenu}
+            style={{
+              height: '100vh',
+              width: '100vw',
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              zIndex: 9999,
+            }}
           />
         )}
       </AnimatePresence>
@@ -227,7 +250,7 @@ export function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed top-0 left-0 z-[10000] h-full w-full bg-white md:hidden"
+            className="mobile-sheet-full z-[10000] bg-white md:hidden"
             variants={menuSlideVariants}
             initial="closed"
             animate="open"
@@ -283,7 +306,7 @@ export function Header() {
               </motion.button>
             </div>
 
-            <div className="pt-24 px-6 sm:px-8">
+            <div className="mobile-sheet-content pt-24 px-6 sm:px-8">
               <motion.nav
                 className="space-y-0"
                 variants={staggerContainer}

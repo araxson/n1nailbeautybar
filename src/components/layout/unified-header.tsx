@@ -23,6 +23,13 @@ export function UnifiedHeader({
   const [isClosing, setIsClosing] = useState(false);
   const [showLoader, setShowLoader] = useState(isInitialLoading);
 
+  // Cleanup function to reset body scroll when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('body-scroll-locked');
+    };
+  }, []);
+
   useEffect(() => {
     if (!isInitialLoading) return;
 
@@ -37,6 +44,8 @@ export function UnifiedHeader({
   const toggleMenu = () => {
     if (!isMenuOpen) {
       setIsHamburgerActive(true);
+      // Prevent body scroll when menu opens
+      document.body.classList.add('body-scroll-locked');
       setTimeout(() => {
         setIsMenuOpen(true);
       }, 300);
@@ -44,6 +53,8 @@ export function UnifiedHeader({
       setIsClosing(true);
       setTimeout(() => {
         setIsMenuOpen(false);
+        // Re-enable body scroll when menu closes
+        document.body.classList.remove('body-scroll-locked');
       }, 300);
       setTimeout(() => {
         setIsHamburgerActive(false);
@@ -56,6 +67,8 @@ export function UnifiedHeader({
     setIsClosing(true);
     setTimeout(() => {
       setIsMenuOpen(false);
+      // Re-enable body scroll when menu closes
+      document.body.classList.remove('body-scroll-locked');
     }, 300);
     setTimeout(() => {
       setIsHamburgerActive(false);
@@ -71,6 +84,8 @@ export function UnifiedHeader({
       setIsClosing(true);
       setTimeout(() => {
         setIsMenuOpen(false);
+        // Re-enable body scroll when menu closes
+        document.body.classList.remove('body-scroll-locked');
       }, 300);
       setTimeout(() => {
         scrollToElement(sectionId, 80);
@@ -368,6 +383,14 @@ export function UnifiedHeader({
               ease: [0.23, 1, 0.32, 1] as const,
             }}
             onClick={closeMenu}
+            style={{
+              height: '100vh',
+              width: '100vw',
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              zIndex: 40,
+            }}
           />
         )}
       </AnimatePresence>
@@ -375,7 +398,7 @@ export function UnifiedHeader({
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed top-0 left-0 z-50 h-full w-full bg-white md:hidden"
+            className="mobile-sheet-full z-50 bg-white md:hidden"
             variants={menuSlideVariants}
             initial="closed"
             animate="open"
@@ -424,7 +447,7 @@ export function UnifiedHeader({
               </motion.button>
             </div>
 
-            <div className="pt-24 px-6 sm:px-8">
+            <div className="mobile-sheet-content pt-24 px-6 sm:px-8">
               <motion.nav
                 className="space-y-0"
                 variants={staggerContainer}

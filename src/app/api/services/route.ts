@@ -1,18 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-// @ts-expect-error - square-connect module doesn't have TypeScript declarations
-import { ApiClient, CatalogApi } from 'square-connect';
+import { SquareClient, SquareEnvironment } from 'square';
 
-// Square client configuration
-const defaultClient = ApiClient.instance;
-defaultClient.basePath = process.env.SQUARE_ENVIRONMENT === 'production' 
-  ? 'https://connect.squareup.com' 
-  : 'https://connect.squareupsandbox.com';
+// Initialize Square client
+const client = new SquareClient({
+  token: process.env.SQUARE_ACCESS_TOKEN!,
+  environment: process.env.SQUARE_ENVIRONMENT === 'production' 
+    ? SquareEnvironment.Production 
+    : SquareEnvironment.Sandbox
+});
 
-// Configure OAuth2 access token for authorization
-const oauth2 = defaultClient.authentications['oauth2'];
-oauth2.accessToken = process.env.SQUARE_ACCESS_TOKEN;
-
-const catalogApi = new CatalogApi();
+const catalogApi = client.catalog;
 
 export interface SquareService {
   readonly id: string;
@@ -35,14 +32,16 @@ export interface SquareServiceCategory {
 }
 
 // Helper function to format price from Square's Money object
-function formatPrice(amount: number): string {
-  if (amount === 0) return 'Free';
-  return `$${(amount / 100).toFixed(0)}`;
+function formatPrice(amount: number | bigint): string {
+  const numericAmount = typeof amount === 'bigint' ? Number(amount) : amount;
+  if (numericAmount === 0) return 'Free';
+  return `$${(numericAmount / 100).toFixed(0)}`;
 }
 
 // Helper function to format duration from milliseconds
-function formatDuration(durationMs: number): string {
-  const minutes = Math.floor(durationMs / (1000 * 60));
+function formatDuration(durationMs: number | bigint): string {
+  const numericDuration = typeof durationMs === 'bigint' ? Number(durationMs) : durationMs;
+  const minutes = Math.floor(numericDuration / (1000 * 60));
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
   
@@ -71,24 +70,26 @@ function extractFeatures(description: string): string[] {
 
 // Map Square services to our format with category information
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapSquareServiceToCategory(item: any): SquareService | null {
+function mapSquareServiceToCategory(item: any, _categoryMap: Record<string, { name: string; description: string }>): SquareService | null {
   try {
-    const variation = item.item_data?.variations?.[0];
-    if (!variation?.item_variation_data) return null;
+    const variation = item.itemData?.variations?.[0];
+    if (!variation?.itemVariationData) return null;
 
-    const variationData = variation.item_variation_data;
-    const price = variationData.price_money?.amount || 0;
-    const duration = variationData.service_duration || 3600000; // Default 1 hour
+    const variationData = variation.itemVariationData;
+    const price = variationData.priceMoney?.amount || 0;
+    const duration = variationData.serviceDuration || 3600000; // Default 1 hour
     
     // Extract main description and features
-    const fullDescription = item.item_data?.description || '';
+    const fullDescription = item.itemData?.description || '';
     const descriptionParts = fullDescription.split('\n\nFeatures:');
     const mainDescription = descriptionParts[0] || '';
     const features = extractFeatures(fullDescription);
     
-    // Determine category from item name or description
-    const title = item.item_data?.name || '';
-    const category = determineCategoryFromTitle(title);
+    const title = item.itemData?.name || '';
+    
+    // Get category from Square item's category assignment
+    const squareCategories = item.itemData?.categories || [];
+    const categoryId = squareCategories.length > 0 ? squareCategories[0].id || squareCategories[0] : 'uncategorized';
     
     // Generate Square external booking link using the correct format
     // https://book.squareup.com/appointments/{merchant_id}/location/{location_id}/services/{service_id}
@@ -105,7 +106,7 @@ function mapSquareServiceToCategory(item: any): SquareService | null {
       description: mainDescription,
       price: formatPrice(price),
       duration: formatDuration(duration),
-      category,
+      category: categoryId,
       features,
       bookingLink,
       squareId: item.id,
@@ -116,30 +117,6 @@ function mapSquareServiceToCategory(item: any): SquareService | null {
   }
 }
 
-// Helper function to determine category from service title
-function determineCategoryFromTitle(title: string): string {
-  const titleLower = title.toLowerCase();
-  
-  if (titleLower.includes('manicure') && !titleLower.includes('gel') && !titleLower.includes('vip')) {
-    return 'manicures';
-  } else if (titleLower.includes('pedicure') && !titleLower.includes('gel') && !titleLower.includes('vip')) {
-    return 'pedicures';
-  } else if (titleLower.includes('gel') || titleLower.includes('extension') || titleLower.includes('strengthening')) {
-    return 'long-lasting-options';
-  } else if (titleLower.includes('sheer') || titleLower.includes('french') || titleLower.includes('minimalist')) {
-    return 'simple-nail-art';
-  } else if (titleLower.includes('vip')) {
-    return 'vip-services';
-  } else if (titleLower.includes('express') || titleLower.includes('maintenance') || titleLower.includes('polish change') || titleLower.includes('strategist')) {
-    return 'quick-services';
-  } else if (titleLower.includes('essential') || titleLower.includes('luxury') || titleLower.includes('ultimate') || titleLower.includes('combo')) {
-    return 'packages';
-  } else if (titleLower.includes('wax') || titleLower.includes('callus') || titleLower.includes('repair') || titleLower.includes('removal')) {
-    return 'add-on-services';
-  }
-  
-  return 'other';
-}
 
 // Helper function to generate ID from title
 function generateIdFromTitle(title: string): string {
@@ -151,54 +128,36 @@ function generateIdFromTitle(title: string): string {
     .trim();
 }
 
-// Category information mapping
-const categoryInfo: Record<string, { title: string; description: string }> = {
-  'manicures': {
-    title: 'Manicures',
-    description: 'Professional hand care and nail enhancement',
-  },
-  'pedicures': {
-    title: 'Pedicures',
-    description: 'Complete foot care and relaxation',
-  },
-  'long-lasting-options': {
-    title: 'Long-Lasting Options',
-    description: 'Durable nail enhancements and treatments',
-  },
-  'simple-nail-art': {
-    title: 'Simple Nail Art',
-    description: 'Elegant and creative nail designs',
-  },
-  'vip-services': {
-    title: 'VIP Services',
-    description: 'Premium services with our top artist specialists',
-  },
-  'quick-services': {
-    title: 'Quick Services',
-    description: 'Express treatments for busy schedules',
-  },
-  'packages': {
-    title: 'Packages',
-    description: 'Combined services for complete care',
-  },
-  'add-on-services': {
-    title: 'Add-On Services',
-    description: 'Enhance your experience with additional treatments',
-  },
-};
 
 export async function GET(_request: NextRequest) {
   try {
-    // Get all catalog items from Square
-    const result = await catalogApi.listCatalog({ types: 'ITEM' });
+    // Get both categories and items from Square
+    const [categoriesResponse, itemsResponse] = await Promise.all([
+      catalogApi.list({ types: 'CATEGORY' }),
+      catalogApi.list({ types: 'ITEM' })
+    ]);
     
-    if (!result.objects) {
+    if (!itemsResponse.data) {
       return NextResponse.json({ categories: [] });
     }
     
+    // Create a map of category IDs to category info
+    const categoryMap: Record<string, { name: string; description: string }> = {};
+    if (categoriesResponse.data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      categoriesResponse.data.forEach((category: any) => {
+        if (category.categoryData) {
+          categoryMap[category.id] = {
+            name: category.categoryData.name || 'Untitled Category',
+            description: category.categoryData.description || ''
+          };
+        }
+      });
+    }
+    
     // Map Square items to our service format
-    const services: SquareService[] = result.objects
-      .map(mapSquareServiceToCategory)
+    const services: SquareService[] = itemsResponse.data
+      .map(item => mapSquareServiceToCategory(item, categoryMap))
       .filter((service: SquareService | null): service is SquareService => service !== null);
     
     // Group services by category
@@ -212,19 +171,29 @@ export async function GET(_request: NextRequest) {
       categorizedServices[category].push(service);
     });
     
-    // Convert to category format
-    const categories: SquareServiceCategory[] = Object.entries(categorizedServices).map(([categoryId, categoryServices]) => ({
-      id: categoryId,
-      title: categoryInfo[categoryId]?.title || categoryId,
-      description: categoryInfo[categoryId]?.description || '',
-      services: categoryServices,
-    }));
+    // Convert to category format using Square category data
+    const categories: SquareServiceCategory[] = Object.entries(categorizedServices).map(([categoryId, categoryServices]) => {
+      const categoryInfo = categoryMap[categoryId];
+      return {
+        id: categoryId,
+        title: categoryInfo?.name || 'Unknown Category',
+        description: categoryInfo?.description || '',
+        services: categoryServices,
+      };
+    });
     
-    return NextResponse.json({ 
+    const response = NextResponse.json({ 
       categories,
       total: services.length,
       lastUpdated: new Date().toISOString(),
     });
+    
+    // Add cache-busting headers to ensure fresh data
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
     
   } catch (error) {
     console.error('Error fetching services from Square:', error);

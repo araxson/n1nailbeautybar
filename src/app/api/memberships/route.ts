@@ -1,18 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-// @ts-expect-error - square-connect module doesn't have TypeScript declarations
-import { ApiClient, CatalogApi } from 'square-connect';
+import { SquareClient, SquareEnvironment } from 'square';
 
-// Square client configuration
-const defaultClient = ApiClient.instance;
-defaultClient.basePath = process.env.SQUARE_ENVIRONMENT === 'production' 
-  ? 'https://connect.squareup.com' 
-  : 'https://connect.squareupsandbox.com';
+// Initialize Square client
+const client = new SquareClient({
+  token: process.env.SQUARE_ACCESS_TOKEN!,
+  environment: process.env.SQUARE_ENVIRONMENT === 'production' 
+    ? SquareEnvironment.Production 
+    : SquareEnvironment.Sandbox
+});
 
-// Configure OAuth2 access token for authorization
-const oauth2 = defaultClient.authentications['oauth2'];
-oauth2.accessToken = process.env.SQUARE_ACCESS_TOKEN;
-
-const catalogApi = new CatalogApi();
+const catalogApi = client.catalog;
 
 export interface SquareMembershipLevel {
   readonly id: string;
@@ -24,9 +21,10 @@ export interface SquareMembershipLevel {
 }
 
 // Helper function to format price from Square's Money object
-function formatPrice(amount: number): string {
-  if (amount === 0) return 'Free';
-  return `$${(amount / 100).toFixed(0)}`;
+function formatPrice(amount: number | bigint): string {
+  const numericAmount = typeof amount === 'bigint' ? Number(amount) : amount;
+  if (numericAmount === 0) return 'Free';
+  return `$${(numericAmount / 100).toFixed(0)}`;
 }
 
 // Extract benefits from description
@@ -42,13 +40,13 @@ function extractBenefits(description: string): string[] {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapSquareSubscriptionToMembership(plan: any): SquareMembershipLevel | null {
   try {
-    const planData = plan.subscription_plan_data;
+    const planData = plan.subscriptionPlanData;
     if (!planData) return null;
 
-    const phase = planData.subscription_phases?.[0];
+    const phase = planData.subscriptionPhases?.[0];
     if (!phase) return null;
 
-    const price = phase.recurring_price_money?.amount || 0;
+    const price = phase.recurringPriceMoney?.amount || 0;
     const title = planData.name?.replace(' Membership', '') || '';
     const description = planData.description || '';
     const benefits = extractBenefits(description);
@@ -83,14 +81,14 @@ function generateIdFromTitle(title: string): string {
 export async function GET(_request: NextRequest) {
   try {
     // Get all subscription plans from Square
-    const result = await catalogApi.listCatalog({ types: 'SUBSCRIPTION_PLAN' });
+    const catalogResponse = await catalogApi.list({ types: 'SUBSCRIPTION_PLAN' });
     
-    if (!result.objects) {
+    if (!catalogResponse.data) {
       return NextResponse.json({ memberships: [] });
     }
     
     // Map Square subscription plans to our membership format
-    const memberships: SquareMembershipLevel[] = result.objects
+    const memberships: SquareMembershipLevel[] = catalogResponse.data
       .map(mapSquareSubscriptionToMembership)
       .filter((membership: SquareMembershipLevel | null): membership is SquareMembershipLevel => membership !== null)
       .sort((a: SquareMembershipLevel, b: SquareMembershipLevel) => {
@@ -100,11 +98,18 @@ export async function GET(_request: NextRequest) {
         return priceA - priceB;
       });
     
-    return NextResponse.json({ 
+    const response = NextResponse.json({ 
       memberships,
       total: memberships.length,
       lastUpdated: new Date().toISOString(),
     });
+    
+    // Add cache-busting headers to ensure fresh data
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
     
   } catch (error) {
     console.error('Error fetching memberships from Square:', error);
