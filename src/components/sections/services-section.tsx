@@ -6,9 +6,7 @@ import { useState } from "react";
 
 // Generate booking link for any service
 const generateBookingLink = (service: SquareService): string => {
-  return (
-    service.bookingLink || `https://n1nail.ca/book/${service.id}`
-  );
+  return service.bookingLink || `https://n1nail.ca/book/${service.id}`;
 };
 
 interface ServiceItemProps {
@@ -151,7 +149,9 @@ export function ServicesSection() {
           <div className="text-center">
             <div className="inline-flex items-center justify-center space-x-2">
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-600"></div>
-              <span className="text-sm text-neutral-600 tracking-[0.1em]">Loading services...</span>
+              <span className="text-sm text-neutral-600 tracking-[0.1em]">
+                Loading services...
+              </span>
             </div>
           </div>
         </div>
@@ -167,8 +167,12 @@ export function ServicesSection() {
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
           <div className="text-center">
-            <p className="text-sm text-red-600 mb-4">Error loading services: {error}</p>
-            <p className="text-xs text-neutral-500">Please try refreshing the page</p>
+            <p className="text-sm text-red-600 mb-4">
+              Error loading services: {error}
+            </p>
+            <p className="text-xs text-neutral-500">
+              Please try refreshing the page
+            </p>
           </div>
         </div>
       </section>

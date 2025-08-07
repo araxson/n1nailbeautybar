@@ -7,7 +7,6 @@ import { scrollToElement } from "@/lib/utils";
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [textVisible, setTextVisible] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
@@ -17,7 +16,6 @@ export function HeroSection() {
     null
   );
   const [isMobile, setIsMobile] = useState(false);
-  const [swipeProgress, setSwipeProgress] = useState(0);
 
   // Detect mobile device
   useEffect(() => {
@@ -180,7 +178,6 @@ export function HeroSection() {
     const touch = e.targetTouches[0];
     if (touch) {
       setTouchStart({ x: touch.clientX, y: touch.clientY });
-      setSwipeProgress(0);
     }
     setTouchEnd(null);
   };
@@ -198,10 +195,6 @@ export function HeroSection() {
       const deltaY = Math.abs(touchStart.y - currentPos.y);
       const swipeDistance = Math.abs(deltaX);
 
-      // Calculate swipe progress for visual feedback
-      const progress = Math.min(swipeDistance / 100, 1);
-      setSwipeProgress(progress);
-
       // If horizontal movement is dominant and significant, prevent scrolling
       if (swipeDistance > deltaY && swipeDistance > 10) {
         e.preventDefault();
@@ -210,11 +203,10 @@ export function HeroSection() {
     }
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
+  const handleTouchEnd = (_e: React.TouchEvent) => {
     if (!touchStart || !touchEnd || isTransitioning) {
       setTouchStart(null);
       setTouchEnd(null);
-      setSwipeProgress(0);
       return;
     }
 
@@ -246,7 +238,6 @@ export function HeroSection() {
     // Reset touch states
     setTouchStart(null);
     setTouchEnd(null);
-    setSwipeProgress(0);
   };
 
   const nextSlide = () => {
@@ -317,7 +308,7 @@ export function HeroSection() {
               key={`${currentSlide}-${animationKey}`}
               variants={containerVariants}
               initial="hidden"
-              animate={textVisible ? "visible" : "hidden"}
+              animate="visible"
               exit="exit"
               className="space-y-6"
             >
@@ -495,6 +486,45 @@ export function HeroSection() {
           />
         </motion.svg>
       </motion.button>
+
+      {/* Invisible Clickable Areas for Enhanced Navigation */}
+      {/* Left 20% Clickable Area */}
+      <motion.button
+        onClick={prevSlide}
+        className="absolute left-0 top-0 w-[20%] h-full z-10 cursor-pointer"
+        aria-label="Previous slide (extended area)"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          delay: 3.0,
+          duration: 1.6,
+          ease: [0.22, 1, 0.36, 1] as const,
+        }}
+        style={{
+          background: "transparent",
+          border: "none",
+          outline: "none",
+        }}
+      />
+
+      {/* Right 20% Clickable Area */}
+      <motion.button
+        onClick={nextSlide}
+        className="absolute right-0 top-0 w-[20%] h-full z-10 cursor-pointer"
+        aria-label="Next slide (extended area)"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          delay: 3.0,
+          duration: 1.6,
+          ease: [0.22, 1, 0.36, 1] as const,
+        }}
+        style={{
+          background: "transparent",
+          border: "none",
+          outline: "none",
+        }}
+      />
     </section>
   );
 }

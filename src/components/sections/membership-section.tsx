@@ -96,13 +96,19 @@ export function MembershipSection() {
           <div className="text-center">
             <div className="inline-flex items-center justify-center space-x-2">
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-600"></div>
-              <span className="text-sm text-neutral-600 tracking-[0.1em]">Loading memberships...</span>
+              <span className="text-sm text-neutral-600 tracking-[0.1em]">
+                Loading memberships...
+              </span>
             </div>
           </div>
         ) : error ? (
           <div className="text-center">
-            <p className="text-sm text-red-600 mb-4">Error loading memberships: {error}</p>
-            <p className="text-xs text-neutral-500">Please try refreshing the page</p>
+            <p className="text-sm text-red-600 mb-4">
+              Error loading memberships: {error}
+            </p>
+            <p className="text-xs text-neutral-500">
+              Please try refreshing the page
+            </p>
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-8 lg:gap-10">

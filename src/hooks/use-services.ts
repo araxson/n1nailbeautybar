@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import type { SquareServiceCategory } from '@/app/api/services/route';
-import type { SquareMembershipLevel } from '@/app/api/memberships/route';
+import { useState, useEffect } from "react";
+import type { SquareServiceCategory } from "@/app/api/services/route";
+import type { SquareMembershipLevel } from "@/app/api/memberships/route";
 
 interface UseServicesReturn {
   categories: SquareServiceCategory[];
@@ -31,33 +31,34 @@ export function useServices(): UseServicesReturn {
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const response = await fetch(`/api/services?_t=${Date.now()}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
         },
       });
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch services: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (data.error) {
         throw new Error(data.error);
       }
-      
+
       setCategories(data.categories || []);
       setLastUpdated(data.lastUpdated || null);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      const errorMessage =
+        err instanceof Error ? err.message : "Unknown error occurred";
       setError(errorMessage);
-      console.error('Error fetching services from API:', err);
-      
+      console.error("Error fetching services from API:", err);
+
       // Set empty categories on error
       setCategories([]);
     } finally {
@@ -90,24 +91,24 @@ export function useMemberships(): UseMembershipsReturn {
       setIsLoading(true);
       setError(null);
       const response = await fetch(`/api/memberships?_t=${Date.now()}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
         },
       });
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch memberships: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (data.error) {
         throw new Error(data.error);
       }
-      
+
       // Use hardcoded membership data instead of Square API
       const hardcodedMemberships: SquareMembershipLevel[] = [
         {
@@ -146,14 +147,15 @@ export function useMemberships(): UseMembershipsReturn {
           squareId: "hardcoded-platinum",
         },
       ];
-      
+
       setMemberships(hardcodedMemberships);
       setLastUpdated(data.lastUpdated || null);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      const errorMessage =
+        err instanceof Error ? err.message : "Unknown error occurred";
       setError(errorMessage);
-      console.error('Error fetching memberships from API:', err);
-      
+      console.error("Error fetching memberships from API:", err);
+
       // Set empty memberships on error
       setMemberships([]);
     } finally {
@@ -189,10 +191,7 @@ export function useSquareData() {
       memberships: memberships.error,
     },
     refetchAll: async () => {
-      await Promise.all([
-        services.refetch(),
-        memberships.refetch(),
-      ]);
+      await Promise.all([services.refetch(), memberships.refetch()]);
     },
   };
 }

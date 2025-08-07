@@ -1,10 +1,8 @@
-declare module 'squareup' {
+declare module "squareup" {
   export interface Money {
     amount?: number;
     currency?: string;
   }
-
-
 
   export interface CatalogObject {
     id: string;
@@ -47,12 +45,15 @@ declare module 'squareup' {
   }
 
   export interface CatalogApi {
-    listCatalog(cursor?: string, types?: string): Promise<{ result: ListCatalogResponse }>;
+    listCatalog(
+      cursor?: string,
+      types?: string
+    ): Promise<{ result: ListCatalogResponse }>;
   }
 
   export const Environment = {
-    Production: 'production',
-    Sandbox: 'sandbox'
+    Production: "production",
+    Sandbox: "sandbox",
   } as const;
 
   export interface ClientConfig {

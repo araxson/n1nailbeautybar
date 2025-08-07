@@ -27,7 +27,7 @@ export function UnifiedHeader({
   // Cleanup function to reset body scroll when component unmounts
   useEffect(() => {
     return () => {
-      document.body.classList.remove('body-scroll-locked');
+      document.body.classList.remove("body-scroll-locked");
     };
   }, []);
 
@@ -46,7 +46,7 @@ export function UnifiedHeader({
     if (!isMenuOpen) {
       setIsHamburgerActive(true);
       // Prevent body scroll when menu opens
-      document.body.classList.add('body-scroll-locked');
+      document.body.classList.add("body-scroll-locked");
       setTimeout(() => {
         setIsMenuOpen(true);
       }, 300);
@@ -55,7 +55,7 @@ export function UnifiedHeader({
       setTimeout(() => {
         setIsMenuOpen(false);
         // Re-enable body scroll when menu closes
-        document.body.classList.remove('body-scroll-locked');
+        document.body.classList.remove("body-scroll-locked");
       }, 300);
       setTimeout(() => {
         setIsHamburgerActive(false);
@@ -69,7 +69,7 @@ export function UnifiedHeader({
     setTimeout(() => {
       setIsMenuOpen(false);
       // Re-enable body scroll when menu closes
-      document.body.classList.remove('body-scroll-locked');
+      document.body.classList.remove("body-scroll-locked");
     }, 300);
     setTimeout(() => {
       setIsHamburgerActive(false);
@@ -86,7 +86,7 @@ export function UnifiedHeader({
       setTimeout(() => {
         setIsMenuOpen(false);
         // Re-enable body scroll when menu closes
-        document.body.classList.remove('body-scroll-locked');
+        document.body.classList.remove("body-scroll-locked");
       }, 300);
       setTimeout(() => {
         scrollToElement(sectionId, 80);
@@ -385,9 +385,9 @@ export function UnifiedHeader({
             }}
             onClick={closeMenu}
             style={{
-              height: '100vh',
-              width: '100vw',
-              position: 'fixed',
+              height: "100vh",
+              width: "100vw",
+              position: "fixed",
               top: 0,
               left: 0,
               zIndex: 40,

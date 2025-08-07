@@ -16,7 +16,7 @@ export function Header() {
   // Cleanup function to reset body scroll when component unmounts
   useEffect(() => {
     return () => {
-      document.body.classList.remove('body-scroll-locked');
+      document.body.classList.remove("body-scroll-locked");
     };
   }, []);
 
@@ -25,7 +25,7 @@ export function Header() {
       // Opening: hamburger collapses to single line → then sheet opens
       setIsHamburgerActive(true); // Collapse to single line
       // Prevent body scroll when menu opens
-      document.body.classList.add('body-scroll-locked');
+      document.body.classList.add("body-scroll-locked");
       setTimeout(() => {
         setIsMenuOpen(true); // Open menu sheet
       }, 300); // Wait for collapse animation to complete
@@ -35,7 +35,7 @@ export function Header() {
       setTimeout(() => {
         setIsMenuOpen(false);
         // Re-enable body scroll when menu closes
-        document.body.classList.remove('body-scroll-locked');
+        document.body.classList.remove("body-scroll-locked");
       }, 300); // Professional closing timing
       setTimeout(() => {
         setIsHamburgerActive(false);
@@ -49,7 +49,7 @@ export function Header() {
     setTimeout(() => {
       setIsMenuOpen(false);
       // Re-enable body scroll when menu closes
-      document.body.classList.remove('body-scroll-locked');
+      document.body.classList.remove("body-scroll-locked");
     }, 300); // Consistent with toggleMenu
     setTimeout(() => {
       setIsHamburgerActive(false);
@@ -69,7 +69,7 @@ export function Header() {
       setTimeout(() => {
         setIsMenuOpen(false);
         // Re-enable body scroll when menu closes
-        document.body.classList.remove('body-scroll-locked');
+        document.body.classList.remove("body-scroll-locked");
       }, 300);
 
       // Scroll to section after menu starts closing
@@ -236,9 +236,9 @@ export function Header() {
             }}
             onClick={closeMenu}
             style={{
-              height: '100vh',
-              width: '100vw',
-              position: 'fixed',
+              height: "100vh",
+              width: "100vw",
+              position: "fixed",
               top: 0,
               left: 0,
               zIndex: 9999,
@@ -265,13 +265,13 @@ export function Header() {
             }}
           >
             {/* Close Button */}
-            <div className="absolute top-6 right-6">
+            <div className="absolute top-8 right-8">
               <motion.button
                 onClick={closeMenu}
-                className="w-10 h-10 flex flex-col justify-center items-center relative p-2"
+                className="w-12 h-12 flex flex-col justify-center items-center relative p-3"
                 aria-label="Close menu"
-                whileHover={{ opacity: 0.8 }}
-                whileTap={{ opacity: 1 }}
+                whileHover={{ opacity: 0.8, scale: 1.05 }}
+                whileTap={{ opacity: 1, scale: 0.95 }}
                 initial={{ opacity: 0, rotate: 45, filter: "blur(2px)" }}
                 animate={{
                   opacity: 1,
